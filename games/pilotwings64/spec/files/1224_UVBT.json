@@ -1,0 +1,1 @@
+{"type":"UVBT","chunks":[{"tag":"PAD ","prov":"slot","zeros":4,"compressed":false},{"tag":"PAD ","prov":"slot","zeros":4,"compressed":false},{"tag":"COMM","compressed":true,"prov":"slot","ir":{"fmt":0,"depth":16,"width":62,"stride":64,"height":14,"tile_w":64,"tile_h":32,"tail":"0000"}}]}

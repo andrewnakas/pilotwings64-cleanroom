@@ -1,0 +1,5536 @@
+{
+ "seqs": [
+  {
+   "division": 768,
+   "ticks": 27649,
+   "tempo": 535714,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    1,
+    4,
+    6,
+    7,
+    8,
+    9,
+    10,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 6145,
+   "tempo": 535714,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    1,
+    6,
+    8,
+    9,
+    10
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 98305,
+   "tempo": 571428,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    2,
+    7,
+    9,
+    10,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 73729,
+   "tempo": 461538,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    1,
+    4,
+    5,
+    7,
+    9,
+    10
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 178177,
+   "tempo": 666666,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    2,
+    3,
+    5,
+    9,
+    10,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 6145,
+   "tempo": 666666,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    3,
+    5,
+    10,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 9217,
+   "tempo": 666666,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    3,
+    10,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 9217,
+   "tempo": 666666,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    3,
+    5,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 144385,
+   "tempo": 600000,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    1,
+    2,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 6145,
+   "tempo": 600000,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    5,
+    6,
+    9,
+    10,
+    11
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 6145,
+   "tempo": 600000,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    4,
+    9,
+    10,
+    11
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 6145,
+   "tempo": 666666,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    3,
+    6,
+    9,
+    10,
+    11
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 184321,
+   "tempo": 444444,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    1,
+    5,
+    9,
+    10,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 9217,
+   "tempo": 444444,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    5,
+    9,
+    10,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 12289,
+   "tempo": 444444,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    5,
+    9,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 9217,
+   "tempo": 444444,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    5,
+    9,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 24586,
+   "tempo": 800000,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    2,
+    6,
+    9,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 8449,
+   "tempo": 461538,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    2,
+    9,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 6145,
+   "tempo": 666666,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    2,
+    9,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 98305,
+   "tempo": 375000,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    1,
+    4,
+    7,
+    8,
+    9,
+    10,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 3073,
+   "tempo": 600000,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    5,
+    6,
+    9,
+    10,
+    11
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 6145,
+   "tempo": 600000,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    4,
+    9,
+    10,
+    11
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 6145,
+   "tempo": 666666,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    3,
+    6,
+    9,
+    10,
+    11
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 172033,
+   "tempo": 413793,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    2,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 8449,
+   "tempo": 461538,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    2,
+    9,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 190465,
+   "tempo": 833333,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 9217,
+   "tempo": 833333,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    4,
+    6,
+    7,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 6145,
+   "tempo": 833333,
+   "loop_counts": [],
+   "tracks": [
+    0,
+    6,
+    7,
+    10
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 147457,
+   "tempo": 705882,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    4,
+    8,
+    9,
+    10,
+    11
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 49153,
+   "tempo": 545454,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    1,
+    2,
+    3,
+    9,
+    10,
+    12
+   ]
+  },
+  {
+   "division": 768,
+   "ticks": 187393,
+   "tempo": 600000,
+   "loop_counts": [
+    255
+   ],
+   "tracks": [
+    0,
+    3,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11
+   ]
+  }
+ ],
+ "music": {
+  "rate": 22050,
+  "slots": 100
+ },
+ "sfx": {
+  "rate": 22050,
+  "percussion": null,
+  "insts": [
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 850000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 40,
+      "frames": 18752,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 170000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 3648,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 77312,
+      "loop": {
+       "start": 11746,
+       "end": 65168,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 2704,
+      "loop": {
+       "start": 85,
+       "end": 2689,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1250000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 27520,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 860000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 19008,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 81968,
+      "loop": {
+       "start": 0,
+       "end": 81344,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 63024,
+      "loop": {
+       "start": 0,
+       "end": 62880,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 310000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 3424,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 2300000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 25312,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 3140000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 34656,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 360000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 7888,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 80000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 896,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 35552,
+      "loop": {
+       "start": 77,
+       "end": 35510,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 20224,
+      "loop": {
+       "start": 106,
+       "end": 20166,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 810000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 100,
+      "frames": 17824,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 810000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 17824,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 2580000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 56880,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 5010000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 110432,
+      "loop": {
+       "start": 53473,
+       "end": 110429,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 16544,
+      "loop": {
+       "start": 0,
+       "end": 16539,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 110432,
+      "loop": {
+       "start": 53473,
+       "end": 110429,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 56880,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 420000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 9216,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 330000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 7168,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 330000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 7168,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 420000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 9216,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1890000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 127,
+      "frames": 41632,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 2410000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 53136,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 250000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 5408,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1910000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 42016,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 80,
+      "frames": 19920,
+      "loop": {
+       "start": 0,
+       "end": 19916,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 85,
+      "frames": 29776,
+      "loop": {
+       "start": 29,
+       "end": 29744,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 14192,
+      "loop": {
+       "start": 0,
+       "end": 14179,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 37456,
+      "loop": {
+       "start": 0,
+       "end": 37454,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1000000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 22000,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 61424,
+      "loop": {
+       "start": 0,
+       "end": 61421,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 61424,
+      "loop": {
+       "start": 0,
+       "end": 61421,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 64000,
+      "loop": {
+       "start": 0,
+       "end": 63996,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 28304,
+      "loop": {
+       "start": 0,
+       "end": 28298,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 28304,
+      "loop": {
+       "start": 0,
+       "end": 28298,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 56880,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 19968,
+      "loop": {
+       "start": 0,
+       "end": 19960,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 20272,
+      "loop": {
+       "start": 0,
+       "end": 20266,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 14192,
+      "loop": {
+       "start": 0,
+       "end": 14179,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 56880,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 6848,
+      "loop": {
+       "start": 0,
+       "end": 6841,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 720000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 15840,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 50,
+      "frames": 45520,
+      "loop": {
+       "start": 31569,
+       "end": 45003,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 2410000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 53088,
+      "loop": {
+       "start": 0,
+       "end": 53075,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 680000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 15072,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 200000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 4496,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 280000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 6112,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 180000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 4048,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 310000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 6816,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 600000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 13136,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 710000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 15632,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 450000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 9824,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1160000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 25552,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 840000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 9248,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1060000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 23264,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 540000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 11968,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 600000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 30,
+      "frames": 13264,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 380000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 8448,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1130000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 24848,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 41984,
+      "loop": {
+       "start": 0,
+       "end": 38179,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 19328,
+      "loop": {
+       "start": 229,
+       "end": 19157,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 50,
+      "frames": 21184,
+      "loop": {
+       "start": 1953,
+       "end": 20251,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 0,
+       "decay": 250000,
+       "release": 0,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 2704,
+      "loop": {
+       "start": 85,
+       "end": 2689,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1000000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 22144,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1170000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 51680,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1170000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 127,
+      "frames": 51680,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 85344,
+      "loop": {
+       "start": 0,
+       "end": 85334,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 260000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 80,
+      "frames": 2864,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 430000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 127,
+      "frames": 9536,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1370000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 30288,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1410000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 31168,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 25472,
+      "loop": {
+       "start": 22905,
+       "end": 25455,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 460000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 40,
+      "frames": 5136,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 380000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 8352,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 380000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 8352,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 0,
+       "decay": 4000000,
+       "release": 4000000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 110432,
+      "loop": {
+       "start": 53473,
+       "end": 110429,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 17360,
+      "loop": {
+       "start": 0,
+       "end": 17353,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 840000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 9248,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1170000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 25792,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 140000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 127,
+      "frames": 1520,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1910000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 127,
+      "frames": 42016,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1910000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 127,
+      "frames": 42016,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1170000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 127,
+      "frames": 25792,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1310000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 127,
+      "frames": 28848,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 180000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 80,
+      "frames": 3920,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 790000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 17360,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 290000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 30,
+      "frames": 6336,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 570000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 12544,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 390000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 8576,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 36160,
+      "loop": {
+       "start": 175,
+       "end": 36032,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 400000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 8784,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 53824,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1230000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 27104,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1290000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 55,
+      "frames": 28416,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1460000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 32240,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 990000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 55,
+      "frames": 21904,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1120000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 24768,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1150000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 55,
+      "frames": 25360,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 780000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 35,
+      "frames": 17168,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 830000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 18224,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 0,
+       "decay": 436000,
+       "release": 0,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 50,
+      "frames": 8608,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 300000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 3264,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 18016,
+      "loop": {
+       "start": 488,
+       "end": 17820,
+       "count": 4294967295
+      }
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 200000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 50,
+      "frames": 4464,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 600000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 127,
+      "frames": 13184,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1340000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 14752,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 1550000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 34112,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": -1,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 127,
+      "frames": 8608,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 220000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 4848,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 740000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 16288,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 640000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 14128,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 610000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 13392,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 360000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 7920,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 740000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 16288,
+      "loop": null
+     }
+    ]
+   },
+   {
+    "volume": 127,
+    "pan": 64,
+    "priority": 5,
+    "trem": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "vib": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "bend": 200,
+    "sounds": [
+     {
+      "env": {
+       "attack": 5000,
+       "decay": 210000,
+       "release": 5000,
+       "attack_vol": 127,
+       "decay_vol": 127
+      },
+      "keymap": {
+       "vel_min": 0,
+       "vel_max": 127,
+       "key_min": 41,
+       "key_max": 41,
+       "key_base": 41,
+       "detune": 0
+      },
+      "pan": 64,
+      "volume": 64,
+      "frames": 4624,
+      "loop": null
+     }
+    ]
+   }
+  ]
+ }
+}
