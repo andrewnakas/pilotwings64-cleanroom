@@ -1,8 +1,7 @@
 """Split a Pilotwings 64 image into labelled byte streams for the taint scan.
 
 `expressive_streams(image)` returns only the content the clean room must
-regenerate (texels, mesh vertices and display lists, animation poses,
-text, font glyphs, samples and note data). `all_streams(image)` returns
+regenerate (texels, blit pixels, font glyphs, text, samples and note data). `all_streams(image)` returns
 every decompressed chunk plus the audio segments.
 
 Works on both retail and clean images (same parsers), with the segment
@@ -47,15 +46,9 @@ def expressive_streams(image, seg=None):
                 yield lab + ":pixels", bytes.fromhex(misc.parse_uvbt(c.data)["pixels"])
             elif f.type == "UVFT" and c.tag == "IMAG":
                 yield lab, c.data
-            elif f.type == "UVMD" and c.tag == "COMM":
-                m = engine.parse_uvmd(c.data)
-                yield lab + ":vtx", b"".join(struct.pack(">hhhHhhBBBB", *v) for v in m["vtx"])
-                yield lab + ":dl", _cmd_bytes([s for l in m["lods"] for p in l["parts"] for s in p["states"]])
-            elif f.type == "UVCT" and c.tag == "COMM":
-                yield lab + ":vtxattr", _vtx_expressive(engine.parse_uvct(c.data)["vtx"])
-            elif f.type == "UVAN" and c.tag == "PART":
-                p = misc.parse_uvan_part(c.data)
-                yield lab + ":quats", b"".join(struct.pack(">4f", *k["q"]) for k in p["keys"])
+            # Models, contours, animations and environment colours are kept as
+            # facts under the "geometry + coarse colour" scope, so they are not
+            # expressive streams here.
             elif f.type == "ADAT" and c.tag == "DATA":
                 yield lab, c.data
             elif f.type == "UPWT" and c.tag in ("NAME", "INFO", "JPTX"):

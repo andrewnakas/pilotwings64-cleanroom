@@ -29,6 +29,20 @@ def port(src: str) -> str:
                   "    progname = argv[0];\n    _set_fmode(_O_BINARY);\n"
                   "    _setmode(0, _O_BINARY);\n    _setmode(1, _O_BINARY);\n    _setmode(2, _O_BINARY);\n", 1)
     s = s.replace("    int fd = open(pathPtr, f, mode);", "    int fd = open(pathPtr, f | _O_BINARY, mode);", 1)
+
+    # IRIX tools look at their own name (cfe asserts otherwise): drop Windows'
+    # ".exe" and backslashes from argv[0] before anything reads it.
+    fix_argv0 = r'''    {
+        static char a0[PATH_MAX];
+        strncpy(a0, argv[0], PATH_MAX - 1);
+        for (char* c = a0; *c; c++) if (*c == '\\') *c = '/';
+        size_t l = strlen(a0);
+        if (l > 4 && _stricmp(a0 + l - 4, ".exe") == 0) a0[l - 4] = 0;
+        argv[0] = a0;
+    }
+'''
+    s = s.replace("    int ret;\n    progname = argv[0];\n", "    int ret;\n" + fix_argv0 + "    progname = argv[0];\n", 1)
+    assert "static char a0[PATH_MAX]" in s, "argv[0] anchor not found"
     return s
 
 

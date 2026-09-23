@@ -147,20 +147,23 @@ def main(argv):
     as1 += mips + ["-EB"] + g + dw + [opt] + olimit + [asm, "-o", o["out"], "-t", symtab]
     steps.append((as1, None))
 
-    # Like cc, every pass runs in the caller's directory (the source path and
-    # any -O3 .u file name are relative to it).
+    # cfe runs in the caller's directory (the source path and -I. are relative
+    # to it); the later passes run in the private temp directory, because the
+    # -O3 linker passes write fixed-name scratch files into their cwd and
+    # parallel builds would otherwise trample each other.
+    out_abs = os.path.abspath(o["out"])
     try:
-        for cmd, stdout_to in steps:
+        for n, (cmd, stdout_to) in enumerate(steps):
+            cmd = [out_abs if c == o["out"] else c for c in cmd]
+            cwd = None if n == 0 else tmp
             if stdout_to:
                 with open(stdout_to, "wb") as f:
-                    r = subprocess.run(cmd, stdout=f)
+                    r = subprocess.run(cmd, stdout=f, cwd=cwd)
             else:
-                r = subprocess.run(cmd)
+                r = subprocess.run(cmd, cwd=cwd)
             if r.returncode != 0:
                 die(f"pass failed ({r.returncode}): {' '.join(cmd)}")
     finally:
-        if opt == "-O3" and os.path.exists(u):
-            os.remove(u)
         for n in os.listdir(tmp):
             os.remove(os.path.join(tmp, n))
         os.rmdir(tmp)

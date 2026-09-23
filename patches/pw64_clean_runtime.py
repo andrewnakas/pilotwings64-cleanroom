@@ -24,6 +24,9 @@ MAIN_INCLUDE = f"""
 #define XXH_INLINE_ALL
 #include "xxhash.h"
 
+// patches/rt64_ucode_override.py: GBI for microcode RT64 cannot hash-identify.
+extern "C" void RT64_SetUCodeOverride(uint32_t textAddress, const char* instanceName);
+
 namespace pw64_clean {{
 // The clean image (if any) and its hash; set before the game is registered.
 std::string g_image;
@@ -74,6 +77,11 @@ RUN_CLEAN = f"""int run(int argc, char** argv, const char* rom_arg) {{
     const bool clean_mode = pw64_clean::detect(argc, argv);
     if (clean_mode) {{
         rom_arg = pw64_clean::g_image.c_str();
+        // A clean image carries no Nintendo microcode, so tell RT64 which GBI
+        // the game's two graphics tasks use (identified once from retail by
+        // hash; addresses are the textbin symbols' physical addresses).
+        RT64_SetUCodeOverride(0x245600, "2.0D, 04-01-96 (F3D.NoN SDK 2.0E)");       // gspF3DEX_fifoTextStart
+        RT64_SetUCodeOverride(0x246A30, "2.0D, 04-01-96 (F3D.NoN.fifo SDK 2.0E)");  // gspFast3DTextStart
     }}"""
 
 VERIFY_OLD = "    if (rom_path != nullptr) {\n        pw64::RomHeader header;"
@@ -98,7 +106,15 @@ DISPATCH_NEW = f"""#if PW64_WITH_RUNTIME && PW64_WITH_RECOMPILED
         print_usage(argv[0]);"""
 
 CMAKE_ANCHOR = "target_include_directories(Pilotwings64Recomp"
-CMAKE_ADD = f"""{MARK} xxHash for clean-image hashing
+RSP_OLD = 'set(PW64_RSP_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/RecompiledFuncs/aspMain_rsp.cpp")'
+RSP_NEW = """option(PW64_CLEAN_AUDIO "Clean-room audio HLE instead of the RSPRecomp'd microcode" OFF)  # [n64cleanrecomp]
+    if(PW64_CLEAN_AUDIO)
+        set(PW64_RSP_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/src/audio_hle.cpp")
+    else()
+        set(PW64_RSP_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/RecompiledFuncs/aspMain_rsp.cpp")
+    endif()"""
+CMAKE_MARK = "# [n64cleanrecomp]"
+CMAKE_ADD = f"""{CMAKE_MARK} xxHash for clean-image hashing
 target_include_directories(Pilotwings64Recomp PRIVATE ${{CMAKE_SOURCE_DIR}}/lib/N64ModernRuntime/thirdparty/xxHash)
 """
 
@@ -124,9 +140,12 @@ def patch_main(path: Path):
 
 def patch_cmake(path: Path):
     s = path.read_bytes().decode("utf-8")
-    if MARK in s:
+    if "# [n64cleanrecomp]" in s:
         print(f"{path}: already patched")
         return
+    if s.count(RSP_OLD) != 1:
+        raise SystemExit(f"{path}: aspMain source anchor not found")
+    s = s.replace(RSP_OLD, RSP_NEW)
     s = s.rstrip("\n") + "\n\n" + CMAKE_ADD
     path.write_bytes(s.encode("utf-8"))
     print(f"{path}: patched")
@@ -136,6 +155,9 @@ def main(argv):
     root = Path(argv[1]) if len(argv) > 1 else Path(__file__).resolve().parents[1] / "external" / "pilotwings-64-recomp"
     patch_main(root / "src" / "main.cpp")
     patch_cmake(root / "CMakeLists.txt")
+    # The clean audio HLE source (selected with -DPW64_CLEAN_AUDIO=ON).
+    import shutil
+    shutil.copy(Path(__file__).resolve().parent / "files" / "audio_hle.cpp", root / "src" / "audio_hle.cpp")
 
 
 if __name__ == "__main__":

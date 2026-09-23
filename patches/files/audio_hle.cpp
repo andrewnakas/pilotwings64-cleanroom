@@ -15,6 +15,7 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
 
 #include <librecomp/rsp.hpp>
@@ -215,6 +216,11 @@ void polef(uint8_t* rdram, uint32_t flags, uint32_t gain, uint32_t state_addr) {
 }  // namespace
 
 RspExitReason aspMain_run(uint8_t* rdram, uint32_t /*ucode_addr*/) {
+    // Diagnostic: PW64_HLE_OFF=1 skips the command list entirely (silence).
+    static const bool off = std::getenv("PW64_HLE_OFF") != nullptr;
+    if (off) {
+        return RspExitReason::Broke;
+    }
     // The OSTask is in DMEM at 0xFC0 (librecomp puts it there): data_ptr at
     // +0x30, data_size at +0x34.
     const uint32_t list = RSP_MEM_W_LOAD(0x30, 0xFC0) & 0xFFFFFF;

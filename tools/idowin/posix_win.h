@@ -48,7 +48,6 @@ typedef long long off64_t;
 #define ftruncate _chsize
 #define utime _utime
 #define utimbuf _utimbuf
-#define tempnam _tempnam
 #define mktemp _mktemp
 
 #ifndef O_ACCMODE
@@ -178,3 +177,87 @@ static inline int kill(pid_t pid, int sig) { (void)pid; (void)sig; errno = ENOSY
 #define execvp(p, a) _execvp((p), (const char* const*)(a))
 #define WIFEXITED(s) 1
 #define WEXITSTATUS(s) (s)
+
+#ifndef SIGPIPE
+#define SIGPIPE 13
+#endif
+
+/* ---- getopt (POSIX semantics, single-character options) ------------------ */
+static char* optarg = NULL;
+static int optind = 1, opterr = 1, optopt = 0;
+static int pw_optpos = 1;
+
+static inline int getopt(int argc, char* const argv[], const char* optstring) {
+    optarg = NULL;
+    if (optind >= argc || argv[optind] == NULL || argv[optind][0] != '-' || argv[optind][1] == '\0') {
+        return -1;
+    }
+    if (strcmp(argv[optind], "--") == 0) {
+        optind++;
+        return -1;
+    }
+    int c = (unsigned char)argv[optind][pw_optpos];
+    const char* spec = strchr(optstring, c);
+    optopt = c;
+    if (spec == NULL || c == ':') {
+        if (opterr && optstring[0] != ':') fprintf(stderr, "%s: illegal option -- %c\n", argv[0], c);
+        if (argv[optind][++pw_optpos] == '\0') { optind++; pw_optpos = 1; }
+        return '?';
+    }
+    if (spec[1] == ':') {
+        if (argv[optind][pw_optpos + 1] != '\0') {
+            optarg = &argv[optind][pw_optpos + 1];
+        } else if (optind + 1 < argc) {
+            optarg = argv[++optind];
+        } else {
+            optind++;
+            pw_optpos = 1;
+            if (opterr && optstring[0] != ':') fprintf(stderr, "%s: option requires an argument -- %c\n", argv[0], c);
+            return optstring[0] == ':' ? ':' : '?';
+        }
+        optind++;
+        pw_optpos = 1;
+        return c;
+    }
+    if (argv[optind][++pw_optpos] == '\0') { optind++; pw_optpos = 1; }
+    return c;
+}
+
+/* ---- rarely used by the passes; minimal stand-ins ------------------------ */
+static inline int flock(int fd, int op) { (void)fd; (void)op; return 0; }
+static inline int fchown(int fd, int uid, int gid) { (void)fd; (void)uid; (void)gid; return 0; }
+static inline int getpgrp(void) { return _getpid(); }
+static inline int gethostname(char* name, size_t len) {
+    if (len) { strncpy(name, "localhost", len); name[len - 1] = 0; }
+    return 0;
+}
+typedef void (*pw_sighandler_t)(int);
+static inline pw_sighandler_t sigset(int sig, pw_sighandler_t h) { (void)sig; (void)h; return (pw_sighandler_t)0; }
+static inline void __assert(const char* expr, const char* file, int line) {
+    fprintf(stderr, "Assertion failed: %s, file %s, line %d\n", expr, file, line);
+    abort();
+}
+
+/* ---- process-unique temporary names -------------------------------------
+ * MSVC's tmpnam/_tempnam are not unique across processes started together,
+ * which corrupts parallel builds; name temp files after the PID instead. */
+static unsigned pw_tmp_counter = 0;
+static inline char* pw_tmpname(char* buf, const char* dir, const char* pfx) {
+    static char local[PATH_MAX];
+    char base[PATH_MAX];
+    if (!buf) buf = local;
+    if (!dir || !*dir) {
+        DWORD n = GetTempPathA(PATH_MAX, base);
+        if (n == 0 || n >= PATH_MAX) strcpy(base, ".\\");
+        dir = base;
+    }
+    snprintf(buf, PATH_MAX, "%s%s%s%lu_%u", dir,
+             (dir[strlen(dir) - 1] == '\\' || dir[strlen(dir) - 1] == '/') ? "" : "/",
+             pfx ? pfx : "ido", (unsigned long)GetCurrentProcessId(), pw_tmp_counter++);
+    return buf;
+}
+#define tmpnam(b) pw_tmpname((b), NULL, "ido")
+static inline char* tempnam(const char* dir, const char* pfx) {
+    char* out = (char*)malloc(PATH_MAX);
+    return out ? pw_tmpname(out, dir, pfx) : NULL;
+}

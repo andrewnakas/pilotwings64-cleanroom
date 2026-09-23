@@ -25,6 +25,9 @@ from cleanroom.gfx import gbi
 from . import profile as P
 from .formats import engine, misc
 from .audio_spec import extract_audio
+from . import texlayout
+from cleanroom.gfx import texfmt
+import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_SPEC = os.path.join(HERE, "spec")
@@ -57,12 +60,56 @@ def _state_vertices(st, vtx):
     return [vtx[i][:3] for i in used if i < len(vtx)]
 
 
+GRID = 4
+
+
+def _grid(rgba, n):
+    """n x n mean RGBA over an image (coarse colour, no detail)."""
+    h, w = rgba.shape[:2]
+    out = []
+    for gy in range(n):
+        for gx in range(n):
+            y0, y1 = gy * h // n, max(gy * h // n + 1, (gy + 1) * h // n)
+            x0, x1 = gx * w // n, max(gx * w // n + 1, (gx + 1) * w // n)
+            out.append([int(round(v)) for v in rgba[y0:y1, x0:x1].reshape(-1, 4).mean(0)])
+    return out
+
+
+def _alpha2(rgba):
+    """Alpha quantised to 2 bits per texel, packed 4 per byte (hex)."""
+    a = (rgba[..., 3].astype(np.uint8) >> 6).ravel()
+    a = np.concatenate([a, np.zeros((-len(a)) % 4, np.uint8)])
+    packed = (a[0::4] << 6) | (a[1::4] << 4) | (a[2::4] << 2) | a[3::4]
+    return packed.astype(np.uint8).tobytes().hex()
+
+
+def texture_digest(ir):
+    """Per TMEM region: a coarse colour grid and (for formats with alpha that
+    use it) a 2-bit alpha mask. This is what the user chose to derive from
+    the original art ("geometry + coarse colour"); texel detail is not kept."""
+    img = bytes.fromhex(ir["image"])
+    out = []
+    for t, start, end, stride, tw, rows in texlayout.regions(ir, len(img)):
+        if t["fmt"] not in (texfmt.RGBA, texfmt.IA, texfmt.I):
+            continue
+        data = img[start:end].ljust(stride * rows, bytes(1))
+        rgba = texfmt.decode(data, tw, rows, t["fmt"], t["siz"])
+        vis = rgba[:max(1, min(rows, t["height"])), :max(1, min(tw, t["width"]))]
+        d = {"start": start, "w": tw, "h": rows, "vw": vis.shape[1], "vh": vis.shape[0],
+             "grid": _grid(vis, GRID)}
+        if texlayout.has_alpha(t["fmt"]) and (rgba[..., 3] < 250).any():
+            d["alpha2"] = _alpha2(rgba)
+        out.append(d)
+    return out
+
+
 def clean_uvtx(ir):
     dl = [bytes.fromhex(g) for g in ir["dlist"]]
     out = {k: v for k, v in ir.items() if k != "image"}
     out["image_size"] = len(ir["image"]) // 2
     out["tiles"] = gbi.render_tiles(dl)
     out["timg"] = gbi.settimg_list(dl)
+    out["digest"] = texture_digest(ir)
     return out
 
 
@@ -104,7 +151,16 @@ def clean_uvan_part(ir):
 
 
 def clean_uvbt(ir):
-    return {k: v for k, v in ir.items() if k != "pixels"}
+    out = {k: v for k, v in ir.items() if k != "pixels"}
+    fmt = ir["fmt"] if ir["fmt"] in (texfmt.RGBA, texfmt.IA, texfmt.I) else None
+    siz = {4: texfmt.B4, 8: texfmt.B8, 16: texfmt.B16, 32: texfmt.B32}.get(ir["depth"])
+    if fmt is not None and siz is not None:
+        rgba = texfmt.decode(bytes.fromhex(ir["pixels"]), ir["stride"], ir["height"], fmt, siz)
+        vis = rgba[:, :ir["width"]]
+        out["grid8"] = _grid(vis, 8)
+        if texlayout.has_alpha(fmt) and (rgba[..., 3] < 250).any():
+            out["alpha2"] = _alpha2(rgba)
+    return out
 
 
 FULL_FACT = {"UVSY": engine.parse_uvsy, "UVLV": engine.parse_uvlv,
@@ -122,17 +178,20 @@ def clean_chunk(ftype, c, index_in_file):
     if ftype == "UVTX" and tag == "COMM":
         return {**base, "prov": "slot", "ir": clean_uvtx(engine.parse_uvtx(c.data))}
     if ftype == "UVMD" and tag == "COMM":
-        return {**base, "prov": "slot", "ir": clean_uvmd(engine.parse_uvmd(c.data))}
+        # Geometry + coarse colour scope: meshes (positions, UVs, vertex
+        # shading/normals, display lists) are kept as facts.
+        return {**base, "prov": "fact", "ir": engine.parse_uvmd(c.data)}
     if ftype == "UVCT" and tag == "COMM":
-        return {**base, "prov": "fact", "ir": clean_uvct(engine.parse_uvct(c.data))}
+        return {**base, "prov": "fact", "ir": engine.parse_uvct(c.data)}
     if ftype == "UVEN" and tag == "COMM":
-        return {**base, "prov": "slot", "ir": clean_uven(engine.parse_uven(c.data))}
+        # Sky/fog colours: coarse colour, kept.
+        return {**base, "prov": "fact", "ir": engine.parse_uven(c.data)}
     if ftype == "UVBT" and tag == "COMM":
         return {**base, "prov": "slot", "ir": clean_uvbt(misc.parse_uvbt(c.data))}
     if ftype == "UVAN" and tag == "COMM":
         return {**base, "prov": "slot", "ir": misc.parse_uvan_comm(c.data)}
     if ftype == "UVAN" and tag == "PART":
-        return {**base, "prov": "slot", "ir": clean_uvan_part(misc.parse_uvan_part(c.data))}
+        return {**base, "prov": "fact", "ir": misc.parse_uvan_part(c.data)}
     if ftype == "UVFT":
         if tag == "STRG":
             # The character set a font covers is a functional lookup table.

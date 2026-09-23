@@ -208,7 +208,87 @@ def _tex_tiles(ir):
     return out
 
 
+def _upsample_grid(grid, n, w, h):
+    """Bilinear upsample of an n x n RGBA grid to (h, w)."""
+    g = np.asarray(grid, np.float32).reshape(n, n, 4)
+    ys = (np.arange(h, dtype=np.float32) + 0.5) / max(1, h) * n - 0.5
+    xs = (np.arange(w, dtype=np.float32) + 0.5) / max(1, w) * n - 0.5
+    y0 = np.clip(np.floor(ys).astype(int), 0, n - 1)
+    x0 = np.clip(np.floor(xs).astype(int), 0, n - 1)
+    y1 = np.clip(y0 + 1, 0, n - 1)
+    x1 = np.clip(x0 + 1, 0, n - 1)
+    fy = np.clip(ys - np.floor(ys), 0, 1)[:, None, None]
+    fx = np.clip(xs - np.floor(xs), 0, 1)[None, :, None]
+    top = g[y0][:, x0] * (1 - fx) + g[y0][:, x1] * fx
+    bot = g[y1][:, x0] * (1 - fx) + g[y1][:, x1] * fx
+    return top * (1 - fy) + bot * fy
+
+
+def _detail(seed, w, h, amount=0.06):
+    """Deterministic soft luminance detail (our own texture, not the
+    original's): smoothed value noise on a 4-texel lattice, which keeps
+    surfaces from looking flat and still compresses well."""
+    rng = np.random.default_rng(seed)
+    gh, gw = max(2, h // 4 + 2), max(2, w // 4 + 2)
+    lattice = rng.standard_normal((gh, gw)).astype(np.float32)
+    ys = np.arange(h, dtype=np.float32) / 4.0
+    xs = np.arange(w, dtype=np.float32) / 4.0
+    y0, x0 = ys.astype(int), xs.astype(int)
+    fy, fx = (ys - y0)[:, None], (xs - x0)[None, :]
+    fy, fx = fy * fy * (3 - 2 * fy), fx * fx * (3 - 2 * fx)
+    a = lattice[y0][:, x0]
+    b = lattice[y0][:, x0 + 1]
+    c = lattice[y0 + 1][:, x0]
+    d = lattice[y0 + 1][:, x0 + 1]
+    v = (a * (1 - fx) + b * fx) * (1 - fy) + (c * (1 - fx) + d * fx) * fy
+    return 1.0 + amount * v
+
+
+def _unpack_alpha2(hexstr, w, h):
+    b = np.frombuffer(bytes.fromhex(hexstr), np.uint8)
+    a = np.empty(len(b) * 4, np.uint8)
+    a[0::4], a[1::4], a[2::4], a[3::4] = b >> 6, (b >> 4) & 3, (b >> 2) & 3, b & 3
+    return (a[:w * h].reshape(h, w).astype(np.float32) * 85.0)
+
+
+def _from_digest(tid, d, tw, rows):
+    vw, vh = d["vw"], d["vh"]
+    vis = _upsample_grid(d["grid"], int(round(len(d["grid"]) ** 0.5)), vw, vh)
+    vis[..., :3] *= _detail(_h("detail", tid, d["start"]), vw, vh)[..., None]
+    # Extend the visible area over the stride padding by wrapping.
+    ry = np.arange(rows) % vh
+    rx = np.arange(tw) % vw
+    rgba = vis[ry][:, rx]
+    if "alpha2" in d:
+        rgba[..., 3] = _unpack_alpha2(d["alpha2"], tw, rows)
+    return np.clip(rgba, 0, 255).astype(np.uint8)
+
+
 def gen_uvtx(tid, ir, usage: Usage):
+    if ir.get("digest") is not None:
+        return _gen_uvtx_digest(tid, ir, usage)
+    return _gen_uvtx_procedural(tid, ir, usage)
+
+
+def _gen_uvtx_digest(tid, ir, usage):
+    from .texlayout import regions
+    size = ir["image_size"]
+    img = bytearray(size)
+    digests = {d["start"]: d for d in ir["digest"]}
+    for t, start, end, stride, tw, rows in regions(ir, size):
+        d = digests.get(start)
+        if d is None:
+            continue
+        rgba = _from_digest(tid, d, tw, rows)
+        data = texfmt.encode(rgba, t["fmt"], t["siz"])
+        n = min(len(data), end - start)
+        img[start:start + n] = data[:n]
+    out = {k: v for k, v in ir.items() if k not in ("image_size", "tiles", "timg", "digest")}
+    out["image"] = bytes(img).hex()
+    return out
+
+
+def _gen_uvtx_procedural(tid, ir, usage: Usage):
     size = ir["image_size"]
     img = bytearray(size)
     if tid in usage.terrain:
@@ -240,7 +320,7 @@ def gen_uvtx(tid, ir, usage: Usage):
         end = min(end, size)
         n = min(len(data), end - start)
         img[start:start + n] = data[:n]
-    out = {k: v for k, v in ir.items() if k not in ("image_size", "tiles", "timg")}
+    out = {k: v for k, v in ir.items() if k not in ("image_size", "tiles", "timg", "digest")}
     out["image"] = bytes(img).hex()
     return out
 
@@ -252,6 +332,8 @@ LIGHT = LIGHT / np.linalg.norm(LIGHT)
 
 
 def gen_uvct(cid, ir, tex_dims, usage: Usage):
+    if ir["vtx"] and len(ir["vtx"][0]) == 10:
+        return ir  # full contour kept as a fact (geometry + shading)
     pos = [v[:3] for v in ir["vtx"]]
     flags = [v[3] for v in ir["vtx"]]
     n = len(pos)
@@ -341,6 +423,8 @@ def _emit(vtx_table, local_vtx, local_tris):
 
 
 def gen_uvmd(mid, ir, tex_dims):
+    if "vtx" in ir:
+        return ir  # full model kept as a fact
     hue = (_h("model", mid) % 360) / 360.0
     r, g, b = colorsys.hsv_to_rgb(hue, 0.35, 0.95)
     color = (r * 255, g * 255, b * 255)
@@ -409,6 +493,8 @@ def _mat_to_quat(m):
 
 
 def gen_uvan_part(ir, model_ir):
+    if ir["keys"] and "q" in ir["keys"][0]:
+        return ir  # animation kept as a fact
     mtx = model_ir["mtx"] if model_ir else []
     p = ir["part"]
     q = _mat_to_quat(mtx[p]) if 0 <= p < len(mtx) else [0.0, 0.0, 0.0, 1.0]
@@ -422,6 +508,20 @@ SIZ_OF_DEPTH = {4: texfmt.B4, 8: texfmt.B8, 16: texfmt.B16, 32: texfmt.B32}
 
 
 def gen_uvbt(bid, ir):
+    if "grid8" in ir:
+        w, h, stride = ir["width"], ir["height"], ir["stride"]
+        vis = _upsample_grid(ir["grid8"], 8, w, h)
+        vis[..., :3] *= _detail(_h("blit", bid), w, h, 0.04)[..., None]
+        rgba = np.zeros((h, stride, 4), np.float32)
+        rgba[:, :w] = vis
+        if "alpha2" in ir:
+            rgba[..., 3] = _unpack_alpha2(ir["alpha2"], stride, h)
+        fmt = ir["fmt"] if ir["fmt"] in (texfmt.RGBA, texfmt.IA, texfmt.I) else texfmt.RGBA
+        data = texfmt.encode(np.clip(rgba, 0, 255).astype(np.uint8), fmt, SIZ_OF_DEPTH[ir["depth"]])
+        need = stride * h * ir["depth"] // 8
+        out = {k: v for k, v in ir.items() if k not in ("grid8", "alpha2")}
+        out["pixels"] = data[:need].ljust(need, bytes(1)).hex()
+        return out
     w, h, stride = ir["width"], ir["height"], ir["stride"]
     hue = (_h("blit", bid) % 360) / 360.0
     yy, xx = np.mgrid[0:h, 0:stride].astype(np.float32)
@@ -522,6 +622,8 @@ def text_from_key(key: str) -> str:
 # --------------------------------------------------------------- environment
 
 def gen_uven(eid, ir):
+    if "screen" in ir:
+        return ir  # sky/fog colours kept (coarse colour)
     rng = _rng("env", eid)
     sky = (int(rng.uniform(90, 140)), int(rng.uniform(150, 190)), int(rng.uniform(215, 245)), 255)
     fog = tuple(min(255, int(c * 1.08)) for c in sky[:3]) + (255,)

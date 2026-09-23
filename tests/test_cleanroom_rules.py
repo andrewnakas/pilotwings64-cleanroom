@@ -38,12 +38,13 @@ def test_spec_contains_no_expressive_fields():
         for c in d["chunks"]:
             ir = c.get("ir") or {}
             assert "image" not in ir and "pixels" not in ir, name
-            if d["type"] == "UVMD":
-                assert "vtx" not in ir, name
-            if d["type"] == "UVCT" and "vtx" in ir:
-                assert all(len(v) == 4 for v in ir["vtx"]), name
-            if d["type"] == "UVAN" and c["tag"] == "PART":
-                assert all("q" not in k for k in ir["keys"]), name
+            if d["type"] in ("UVMD", "UVCT", "UVAN", "UVEN"):
+                # Geometry + coarse colour scope: kept, and declared as facts.
+                assert c["prov"] == "fact", name
+            if d["type"] == "UVTX" and c["tag"] == "COMM":
+                for dg in ir["digest"]:
+                    assert set(dg) <= {"start", "w", "h", "vw", "vh", "grid", "alpha2"}, name
+                    assert len(dg["grid"]) <= 16, name
             if (d["type"], c["tag"]) in (("ADAT", "DATA"), ("UVFT", "IMAG")):
                 assert set(c) <= {"tag", "compressed", "prov", "size"}, name
             if d["type"] == "UVSX":
