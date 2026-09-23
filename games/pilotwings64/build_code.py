@@ -157,6 +157,8 @@ def main(argv=None):
     ap.add_argument("--python", type=Path, default=DEFAULTS["python"])
     ap.add_argument("--mips", type=Path, default=DEFAULTS["mips"])
     ap.add_argument("--out", type=Path, default=REPO / "build" / "pilotwings64.clean.z64")
+    ap.add_argument("--dev-retail-ucode", action="store_true",
+                    help="DEV ONLY: keep the retail RSP microcode bins (for the audio comparison harness)")
     ap.add_argument("--no-reserve", action="store_true", help="pack asset segments back to back")
     ap.add_argument("--dev-retail-assets", type=Path, default=None,
                     help="DEV ONLY: take the asset segments from a retail ROM to isolate code vs asset "
@@ -178,6 +180,9 @@ def main(argv=None):
         assets = generated_assets()
     print("replacing ROM-derived inputs ...")
     replace_inputs(a.work, a.decomp, assets, reserve=not a.no_reserve)
+    if a.dev_retail_ucode:
+        for b in (a.decomp / "bin" / "rsp").glob("*.bin"):
+            shutil.copy(b, a.work / "bin" / "rsp" / b.name)
     print("building ELF with native IDO ...")
     elf = build_elf(a.work, a.ido_bin, a.python, a.mips)
     binpath = a.work / "build" / "pilotwings64.clean.bin"

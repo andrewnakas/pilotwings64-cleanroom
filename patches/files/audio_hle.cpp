@@ -83,7 +83,10 @@ void adpcm(uint8_t* rdram, uint32_t flags, uint32_t state_addr) {
         for (int i = 0; i < 16; i++) hist[i] = rds(rdram, state_addr + i * 2);
     }
     int32_t y2 = hist[14], y1 = hist[15];
-    uint32_t in = st.in, out = st.out;
+    // The previous frame's 16 samples go first; decoded audio follows them
+    // (libultra load.c advances its output pointer by 32 bytes past them).
+    for (int i = 0; i < 16; i++) wws(st.out + i * 2, hist[i]);
+    uint32_t in = st.in, out = st.out + 32;
     int remaining = st.count;
     int16_t last[16] = {};
     while (remaining > 0) {
@@ -215,7 +218,18 @@ void polef(uint8_t* rdram, uint32_t flags, uint32_t gain, uint32_t state_addr) {
 
 }  // namespace
 
-RspExitReason aspMain_run(uint8_t* rdram, uint32_t /*ucode_addr*/) {
+// Dev harness access to the work area and a state reset.
+extern "C" uint8_t* pw64_hle_work() { return work; }
+extern "C" void pw64_hle_reset() { st = State{}; std::memset(work, 0, sizeof(work)); }
+
+#ifndef PW64_HLE_ENTRY
+#define PW64_HLE_ENTRY aspMain_run
+#define PW64_HLE_LINKAGE
+#else
+#define PW64_HLE_LINKAGE extern "C"  // dev comparison harness
+#endif
+
+PW64_HLE_LINKAGE RspExitReason PW64_HLE_ENTRY(uint8_t* rdram, uint32_t /*ucode_addr*/) {
     // Diagnostic: PW64_HLE_OFF=1 skips the command list entirely (silence).
     static const bool off = std::getenv("PW64_HLE_OFF") != nullptr;
     if (off) {
