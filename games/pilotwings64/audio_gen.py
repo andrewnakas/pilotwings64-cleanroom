@@ -14,7 +14,7 @@ import os
 
 import numpy as np
 
-from cleanroom.audio import albank, cseq, synth, vadpcm
+from cleanroom.audio import albank, cseq, synth, vadpcm, descriptor
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW16 = albank.RAW16
@@ -229,6 +229,55 @@ def _sfx_samples(i, s, rate):
     return x * synth.env_ad(dur, min(200, dur // 10), 4.0 / dur)
 
 
+def build_bank_from_desc(bank_spec, label):
+    """A bank with the kept structure; every sample resynthesized from its
+    coarse descriptor (shared waves are synthesized once)."""
+    tbl = Table()
+    rate = bank_spec["rate"]
+    made = {}
+
+    def wave_for(s):
+        key = s.get("wave_id") or id(s)
+        if key in made:
+            return made[key]
+        n = max(16, s["frames"])
+        x = descriptor.synthesize(s["desc"], n, rate, _seed(label, key))
+        loop = None
+        if s["loop"]:
+            start = s["loop"]["start"] & ~15
+            end = min(s["loop"]["end"], n)
+            if end - start > 32:
+                x = descriptor.make_loop_seamless(x, start, end)
+            loop = {"start": start, "end": end, "count": s["loop"]["count"]}
+        made[key] = _wave_adpcm(tbl, x / 0.8, loop)
+        return made[key]
+
+    def inst(spec):
+        if spec is None:
+            return None
+        sounds = [{"env": dict(s["env"]), "keymap": dict(s["keymap"]), "wave": wave_for(s),
+                   "pan": s["pan"], "volume": s["volume"], "flags": 0} for s in spec["sounds"]]
+        return {"volume": spec["volume"], "pan": spec["pan"], "priority": spec["priority"], "flags": 0,
+                "trem": spec["trem"], "vib": spec["vib"], "bend": spec["bend"], "sounds": sounds}
+
+    bank = {"flags": 0, "pad": 0, "rate": rate, "percussion": inst(bank_spec.get("percussion")),
+            "insts": [inst(i) for i in bank_spec["insts"]]}
+    return albank.build_bankfile({"revision": albank.AL_BANK_VERSION, "banks": [bank]}), bytes(tbl.buf)
+
+
+def encode_kept_sequence(slot):
+    """Re-encode kept sequence events (melodies) in our own cseq writer."""
+    tracks = {}
+    for t, events in slot["events"].items():
+        evs = []
+        for e in events:
+            kind = e[1]
+            if kind in ("note", "midi", "tempo", "loopstart", "loopend"):
+                evs.append(tuple(e))
+        tracks[int(t)] = evs
+    return cseq.encode(tracks, slot["division"])
+
+
 def build_sfx_bank(sfx):
     tbl = Table()
     rate = sfx["rate"]
@@ -285,9 +334,15 @@ def generate_audio(spec_dir, cache_dir=os.path.join("build", "cache")):
 def _generate_audio(spec_dir):
     with open(os.path.join(spec_dir, "audio.json")) as f:
         a = json.load(f)
-    music_ctl, music_tbl = build_music_bank(a["music"]["rate"])
-    seqs = [compose(s, i) for i, s in enumerate(a["seqs"])]
+    if a["music"].get("insts"):
+        music_ctl, music_tbl = build_bank_from_desc(a["music"], "music")
+    else:
+        music_ctl, music_tbl = build_music_bank(a["music"]["rate"])
+    seqs = [encode_kept_sequence(s) if s.get("events") else compose(s, i) for i, s in enumerate(a["seqs"])]
     seqfile = albank.build_seqfile(seqs)
-    sfx_ctl, sfx_tbl = build_sfx_bank(a["sfx"])
+    if any(i and i["sounds"] and "desc" in i["sounds"][0] for i in a["sfx"]["insts"]):
+        sfx_ctl, sfx_tbl = build_bank_from_desc(a["sfx"], "sfx")
+    else:
+        sfx_ctl, sfx_tbl = build_sfx_bank(a["sfx"])
     return {"seq": seqfile, "ctl": music_ctl, "tbl": music_tbl,
             "sfx_ctl": sfx_ctl, "sfx_tbl": sfx_tbl}

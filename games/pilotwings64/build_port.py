@@ -49,9 +49,14 @@ def main(argv=None):
     n64recomp = port / "lib" / "N64ModernRuntime" / "N64Recomp" / "build-win" / "N64Recomp.exe"
 
     print("patches ...")
+    # Start from the pristine port sources (dev tools such as the audio
+    # comparison harness patch them too), then apply the clean-build patches.
+    run(["git", "-C", port, "checkout", "--", "src/main.cpp", "src/callbacks.cpp", "CMakeLists.txt"])
     run([sys.executable, REPO / "patches" / "pw64_clean_runtime.py", port])
     run([sys.executable, REPO / "patches" / "rt64_ucode_override.py", port])
 
+    # Nothing derived from retail microcode belongs in the clean build.
+    (port / "RecompiledFuncs" / "aspMain_rsp.cpp").unlink(missing_ok=True)
     print("recompiling the clean ELF ...")
     shutil.copy(a.elf, port / "pilotwings64.us.elf")
     funcs = port / "RecompiledFuncs"

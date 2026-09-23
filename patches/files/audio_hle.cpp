@@ -14,6 +14,8 @@
 // opaque to the game, so their layout here is ours.
 
 #include <algorithm>
+#include <array>
+#include <unordered_map>
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
@@ -73,6 +75,19 @@ inline void wrs(uint8_t* rdram, uint32_t a, int16_t v) {
     wr8(rdram, a + 1, uint8_t(v));
 }
 
+// Dev experiment switch (PW64_HLE_RS=n) for the resampler kernel.
+int rs_mode() {
+    static const int m = [] { const char* e = std::getenv("PW64_HLE_RS"); return e ? std::atoi(e) : 0; }();
+    return m;
+}
+
+// Per-voice DSP state lives host-side, keyed by the state block's address:
+// the game never reads these blocks, and keeping them here makes the HLE
+// independent of whatever layout was left in RDRAM.
+std::unordered_map<uint32_t, std::array<int16_t, 40>> g_states;
+inline int16_t sget(uint32_t addr, int i) { return g_states[addr][i]; }
+inline void sset(uint32_t addr, int i, int32_t v) { g_states[addr][i] = int16_t(v); }
+
 // ---------------------------------------------------------------- ADPCM
 void adpcm(uint8_t* rdram, uint32_t flags, uint32_t state_addr) {
     int16_t hist[16] = {};
@@ -129,8 +144,8 @@ void resample(uint8_t* rdram, uint32_t flags, uint32_t pitch, uint32_t state_add
     int16_t hist[4] = {};
     uint32_t frac = 0;
     if (!(flags & A_INIT)) {
-        for (int i = 0; i < 4; i++) hist[i] = rds(rdram, state_addr + i * 2);
-        frac = uint16_t(rds(rdram, state_addr + 8));
+        for (int i = 0; i < 4; i++) hist[i] = sget(state_addr, (i * 2) / 2);
+        frac = uint16_t(sget(state_addr, (8) / 2));
     }
     // The four history samples sit just before the input.
     uint32_t in = st.in - 8;
@@ -143,16 +158,30 @@ void resample(uint8_t* rdram, uint32_t flags, uint32_t pitch, uint32_t state_add
         float t = acc / 65536.0f;
         float p0 = ws(in + (pos + 0) * 2), p1 = ws(in + (pos + 1) * 2);
         float p2 = ws(in + (pos + 2) * 2), p3 = ws(in + (pos + 3) * 2);
-        // Catmull-Rom between p1 and p2.
-        float v = p1 + 0.5f * t * (p2 - p0 + t * (2.0f * p0 - 5.0f * p1 + 4.0f * p2 - p3 +
-                                                    t * (3.0f * (p1 - p2) + p3 - p0)));
+        float v;
+        switch (rs_mode()) {
+        case 1:  // Catmull-Rom between p0 and p1 (half-window earlier)
+        {   float q0 = ws(in + (pos - 1) * 2);
+            v = p0 + 0.5f * t * (p1 - q0 + t * (2.0f * q0 - 5.0f * p0 + 4.0f * p1 - p2 +
+                                                t * (3.0f * (p0 - p1) + p2 - q0)));
+            break; }
+        case 2:  // linear between p1 and p2
+            v = p1 + t * (p2 - p1);
+            break;
+        case 3:  // linear between p0 and p1
+            v = p0 + t * (p1 - p0);
+            break;
+        default:  // Catmull-Rom between p1 and p2
+            v = p1 + 0.5f * t * (p2 - p0 + t * (2.0f * p0 - 5.0f * p1 + 4.0f * p2 - p3 +
+                                                  t * (3.0f * (p1 - p2) + p3 - p0)));
+        }
         wws(st.out + i * 2, int32_t(v));
         acc += step;
         pos += acc >> 16;
         acc &= 0xFFFF;
     }
-    for (int i = 0; i < 4; i++) wrs(rdram, state_addr + i * 2, ws(in + (pos + i) * 2));
-    wrs(rdram, state_addr + 8, int16_t(acc));
+    for (int i = 0; i < 4; i++) sset(state_addr, (i * 2) / 2, ws(in + (pos + i) * 2));
+    sset(state_addr, (8) / 2, int16_t(acc));
 }
 
 // ------------------------------------------------------------ env mixer
@@ -165,11 +194,11 @@ void envmixer(uint8_t* rdram, uint32_t flags, uint32_t state_addr) {
         rate[0] = st.rate[0]; rate[1] = st.rate[1];
         dry = st.dry; wet = st.wet;
     } else {
-        vol[0] = rds(rdram, state_addr + 0); vol[1] = rds(rdram, state_addr + 2);
-        target[0] = rds(rdram, state_addr + 4); target[1] = rds(rdram, state_addr + 6);
-        rate[0] = (int32_t(uint16_t(rds(rdram, state_addr + 8))) << 16) | uint16_t(rds(rdram, state_addr + 10));
-        rate[1] = (int32_t(uint16_t(rds(rdram, state_addr + 12))) << 16) | uint16_t(rds(rdram, state_addr + 14));
-        dry = rds(rdram, state_addr + 16); wet = rds(rdram, state_addr + 18);
+        vol[0] = sget(state_addr, (0) / 2); vol[1] = sget(state_addr, (2) / 2);
+        target[0] = sget(state_addr, (4) / 2); target[1] = sget(state_addr, (6) / 2);
+        rate[0] = (int32_t(uint16_t(sget(state_addr, (8) / 2))) << 16) | uint16_t(sget(state_addr, (10) / 2));
+        rate[1] = (int32_t(uint16_t(sget(state_addr, (12) / 2))) << 16) | uint16_t(sget(state_addr, (14) / 2));
+        dry = sget(state_addr, (16) / 2); wet = sget(state_addr, (18) / 2);
     }
     const int n = st.count / 2;
     for (int i = 0; i < n; i++) {
@@ -195,17 +224,17 @@ void envmixer(uint8_t* rdram, uint32_t flags, uint32_t state_addr) {
         wws(st.wet_left + i * 2, ws(st.wet_left + i * 2) + ((l * wet) >> 15));
         wws(st.wet_right + i * 2, ws(st.wet_right + i * 2) + ((r * wet) >> 15));
     }
-    wrs(rdram, state_addr + 0, int16_t(vol[0])); wrs(rdram, state_addr + 2, int16_t(vol[1]));
-    wrs(rdram, state_addr + 4, int16_t(target[0])); wrs(rdram, state_addr + 6, int16_t(target[1]));
-    wrs(rdram, state_addr + 8, int16_t(rate[0] >> 16)); wrs(rdram, state_addr + 10, int16_t(rate[0]));
-    wrs(rdram, state_addr + 12, int16_t(rate[1] >> 16)); wrs(rdram, state_addr + 14, int16_t(rate[1]));
-    wrs(rdram, state_addr + 16, int16_t(dry)); wrs(rdram, state_addr + 18, int16_t(wet));
+    sset(state_addr, (0) / 2, int16_t(vol[0])); sset(state_addr, (2) / 2, int16_t(vol[1]));
+    sset(state_addr, (4) / 2, int16_t(target[0])); sset(state_addr, (6) / 2, int16_t(target[1]));
+    sset(state_addr, (8) / 2, int16_t(rate[0] >> 16)); sset(state_addr, (10) / 2, int16_t(rate[0]));
+    sset(state_addr, (12) / 2, int16_t(rate[1] >> 16)); sset(state_addr, (14) / 2, int16_t(rate[1]));
+    sset(state_addr, (16) / 2, int16_t(dry)); sset(state_addr, (18) / 2, int16_t(wet));
 }
 
 // ------------------------------------------------------------ pole filter
 // One-pole low-pass used by the reverb. State: s16 last output.
 void polef(uint8_t* rdram, uint32_t flags, uint32_t gain, uint32_t state_addr) {
-    int32_t y = (flags & A_INIT) ? 0 : rds(rdram, state_addr);
+    int32_t y = (flags & A_INIT) ? 0 : sget(state_addr, 0);
     const int32_t g = int16_t(gain);
     const int n = st.count / 2;
     for (int i = 0; i < n; i++) {
@@ -213,7 +242,7 @@ void polef(uint8_t* rdram, uint32_t flags, uint32_t gain, uint32_t state_addr) {
         y = y + (((x - y) * std::clamp(g, 0, 32767)) >> 15);
         wws(st.out + i * 2, y);
     }
-    wrs(rdram, state_addr, int16_t(y));
+    sset(state_addr, 0, int16_t(y));
 }
 
 }  // namespace
@@ -221,6 +250,104 @@ void polef(uint8_t* rdram, uint32_t flags, uint32_t gain, uint32_t state_addr) {
 // Dev harness access to the work area and a state reset.
 extern "C" uint8_t* pw64_hle_work() { return work; }
 extern "C" void pw64_hle_reset() { st = State{}; std::memset(work, 0, sizeof(work)); }
+static std::unordered_map<uint32_t, std::array<int16_t, 40>> g_saved_states;
+extern "C" void pw64_hle_states_save() { g_saved_states = g_states; }
+extern "C" void pw64_hle_states_restore() { g_states = g_saved_states; }
+static void exec_cmd(uint8_t* rdram, uint32_t w0, uint32_t w1);
+extern "C" void pw64_hle_step(uint8_t* rdram, uint32_t w0, uint32_t w1) { exec_cmd(rdram, w0, w1); }
+extern "C" void pw64_hle_io(uint32_t* in, uint32_t* out, uint32_t* count) { *in = st.in; *out = st.out; *count = st.count; }
+
+static void exec_cmd(uint8_t* rdram, uint32_t w0, uint32_t w1) {
+    const uint32_t flags = (w0 >> 16) & 0xFF;
+    switch ((w0 >> 24) & 0xF) {
+    case A_SPNOOP:
+        break;
+    case A_SEGMENT:
+        st.segments[(w1 >> 24) & 0xF] = w1 & 0xFFFFFF;
+        break;
+    case A_SETBUFF:
+        if (flags & A_AUX) {
+            st.dry_right = w0 & 0xFFFF;
+            st.wet_left = w1 >> 16;
+            st.wet_right = w1 & 0xFFFF;
+        } else {
+            st.in = w0 & 0xFFFF;
+            st.out = w1 >> 16;
+            st.count = w1 & 0xFFFF;
+        }
+        break;
+    case A_CLEARBUFF:
+        for (uint32_t i = 0; i < (w1 & 0xFFFF); i++) work[((w0 & 0xFFFF) + i) & 0xFFF] = 0;
+        break;
+    case A_LOADBUFF:
+        rdram_to_work(rdram, st.in, resolve(w1), st.count);
+        break;
+    case A_SAVEBUFF:
+        work_to_rdram(rdram, resolve(w1), st.out, st.count);
+        break;
+    case A_DMEMMOVE: {
+        const uint32_t i = w0 & 0xFFFF, o = w1 >> 16, n = w1 & 0xFFFF;
+        uint8_t tmp[0x1000];
+        for (uint32_t k = 0; k < n && k < sizeof(tmp); k++) tmp[k] = work[(i + k) & 0xFFF];
+        for (uint32_t k = 0; k < n && k < sizeof(tmp); k++) work[(o + k) & 0xFFF] = tmp[k];
+        break;
+    }
+    case A_LOADADPCM: {
+        const uint32_t src = resolve(w1);
+        const uint32_t n = std::min<uint32_t>(w0 & 0xFFFF, sizeof(st.book));
+        for (uint32_t k = 0; k < n / 2; k++) st.book[k] = rds(rdram, src + k * 2);
+        break;
+    }
+    case A_SETLOOP:
+        st.loop_addr = resolve(w1);
+        break;
+    case A_ADPCM:
+        adpcm(rdram, flags, resolve(w1));
+        break;
+    case A_RESAMPLE:
+        resample(rdram, flags, w0 & 0xFFFF, resolve(w1));
+        break;
+    case A_SETVOL:
+        if (flags & A_AUX) {
+            st.dry = int16_t(w0 & 0xFFFF);
+            st.wet = int16_t(w1 & 0xFFFF);  // aSetVolume(A_AUX, dry, 0, wet)
+        } else if (flags & A_VOL) {
+            st.vol[(flags & A_LEFT) ? 0 : 1] = int16_t(w0 & 0xFFFF);
+        } else {
+            const int c = (flags & A_LEFT) ? 0 : 1;
+            st.target[c] = int16_t(w0 & 0xFFFF);
+            st.rate[c] = int32_t(w1);
+        }
+        break;
+    case A_ENVMIXER:
+        envmixer(rdram, flags, resolve(w1));
+        break;
+    case A_MIXER: {
+        const int32_t gain = int16_t(w0 & 0xFFFF);
+        const uint32_t i = w1 >> 16, o = w1 & 0xFFFF;
+        for (int k = 0; k < st.count / 2; k++) {
+            wws(o + k * 2, ws(o + k * 2) + ((ws(i + k * 2) * gain) >> 15));
+        }
+        break;
+    }
+    case A_INTERLEAVE: {
+        const uint32_t l = w1 >> 16, r = w1 & 0xFFFF;
+        const int n = st.count / 2;
+        int16_t tmp[2048];
+        for (int k = 0; k < n && k < 1024; k++) {
+            tmp[k * 2] = ws(l + k * 2);
+            tmp[k * 2 + 1] = ws(r + k * 2);
+        }
+        for (int k = 0; k < n * 2 && k < 2048; k++) wws(st.out + k * 2, tmp[k]);
+        break;
+    }
+    case A_POLEF:
+        polef(rdram, flags, w0 & 0xFFFF, resolve(w1));
+        break;
+    default:
+        break;
+    }
+}
 
 #ifndef PW64_HLE_ENTRY
 #define PW64_HLE_ENTRY aspMain_run
@@ -245,95 +372,7 @@ PW64_HLE_LINKAGE RspExitReason PW64_HLE_ENTRY(uint8_t* rdram, uint32_t /*ucode_a
                             (rd8(rdram, a + 2) << 8) | rd8(rdram, a + 3);
         const uint32_t w1 = (uint32_t(rd8(rdram, a + 4)) << 24) | (rd8(rdram, a + 5) << 16) |
                             (rd8(rdram, a + 6) << 8) | rd8(rdram, a + 7);
-        const uint32_t flags = (w0 >> 16) & 0xFF;
-        switch ((w0 >> 24) & 0xF) {
-        case A_SPNOOP:
-            break;
-        case A_SEGMENT:
-            st.segments[(w1 >> 24) & 0xF] = w1 & 0xFFFFFF;
-            break;
-        case A_SETBUFF:
-            if (flags & A_AUX) {
-                st.dry_right = w0 & 0xFFFF;
-                st.wet_left = w1 >> 16;
-                st.wet_right = w1 & 0xFFFF;
-            } else {
-                st.in = w0 & 0xFFFF;
-                st.out = w1 >> 16;
-                st.count = w1 & 0xFFFF;
-            }
-            break;
-        case A_CLEARBUFF:
-            for (uint32_t i = 0; i < (w1 & 0xFFFF); i++) work[((w0 & 0xFFFF) + i) & 0xFFF] = 0;
-            break;
-        case A_LOADBUFF:
-            rdram_to_work(rdram, st.in, resolve(w1), st.count);
-            break;
-        case A_SAVEBUFF:
-            work_to_rdram(rdram, resolve(w1), st.out, st.count);
-            break;
-        case A_DMEMMOVE: {
-            const uint32_t i = w0 & 0xFFFF, o = w1 >> 16, n = w1 & 0xFFFF;
-            uint8_t tmp[0x1000];
-            for (uint32_t k = 0; k < n && k < sizeof(tmp); k++) tmp[k] = work[(i + k) & 0xFFF];
-            for (uint32_t k = 0; k < n && k < sizeof(tmp); k++) work[(o + k) & 0xFFF] = tmp[k];
-            break;
-        }
-        case A_LOADADPCM: {
-            const uint32_t src = resolve(w1);
-            const uint32_t n = std::min<uint32_t>(w0 & 0xFFFF, sizeof(st.book));
-            for (uint32_t k = 0; k < n / 2; k++) st.book[k] = rds(rdram, src + k * 2);
-            break;
-        }
-        case A_SETLOOP:
-            st.loop_addr = resolve(w1);
-            break;
-        case A_ADPCM:
-            adpcm(rdram, flags, resolve(w1));
-            break;
-        case A_RESAMPLE:
-            resample(rdram, flags, w0 & 0xFFFF, resolve(w1));
-            break;
-        case A_SETVOL:
-            if (flags & A_AUX) {
-                st.dry = int16_t(w0 & 0xFFFF);
-                st.wet = int16_t(w1 & 0xFFFF);  // aSetVolume(A_AUX, dry, 0, wet)
-            } else if (flags & A_VOL) {
-                st.vol[(flags & A_LEFT) ? 0 : 1] = int16_t(w0 & 0xFFFF);
-            } else {
-                const int c = (flags & A_LEFT) ? 0 : 1;
-                st.target[c] = int16_t(w0 & 0xFFFF);
-                st.rate[c] = int32_t(w1);
-            }
-            break;
-        case A_ENVMIXER:
-            envmixer(rdram, flags, resolve(w1));
-            break;
-        case A_MIXER: {
-            const int32_t gain = int16_t(w0 & 0xFFFF);
-            const uint32_t i = w1 >> 16, o = w1 & 0xFFFF;
-            for (int k = 0; k < st.count / 2; k++) {
-                wws(o + k * 2, ws(o + k * 2) + ((ws(i + k * 2) * gain) >> 15));
-            }
-            break;
-        }
-        case A_INTERLEAVE: {
-            const uint32_t l = w1 >> 16, r = w1 & 0xFFFF;
-            const int n = st.count / 2;
-            int16_t tmp[2048];
-            for (int k = 0; k < n && k < 1024; k++) {
-                tmp[k * 2] = ws(l + k * 2);
-                tmp[k * 2 + 1] = ws(r + k * 2);
-            }
-            for (int k = 0; k < n * 2 && k < 2048; k++) wws(st.out + k * 2, tmp[k]);
-            break;
-        }
-        case A_POLEF:
-            polef(rdram, flags, w0 & 0xFFFF, resolve(w1));
-            break;
-        default:
-            break;
-        }
+        exec_cmd(rdram, w0, w1);
     }
     return RspExitReason::Broke;
 }

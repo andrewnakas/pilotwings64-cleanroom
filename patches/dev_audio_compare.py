@@ -25,45 +25,88 @@ extern "C" RspExitReason aspMain_hle_run(uint8_t* rdram, uint32_t ucode_addr);
 extern "C" uint8_t* pw64_hle_work();
 extern "C" void pw64_hle_reset();
 
-// Truncate the task's list after n commands, run both, compare DMEM with the
-// HLE work area. Logs the first command at which they stop agreeing.
+extern "C" void pw64_hle_step(uint8_t* rdram, uint32_t w0, uint32_t w1);
+extern "C" void pw64_hle_states_save();
+extern "C" void pw64_hle_states_restore();
+extern "C" void pw64_hle_io(uint32_t*, uint32_t*, uint32_t*);
+
+// Isolated per-command test: give the HLE the microcode's own DMEM from just
+// before command n, run only command n, compare with the microcode after n.
 static void pw64_audio_bisect(uint8_t* rdram, uint32_t ucode_addr, const std::vector<uint8_t>& snap,
                               const uint8_t* dmem_snap) {{
     constexpr size_t kSpan = 0x01000000;
+    constexpr uint32_t kBase = 0x5C0, kLen = 0xA00;
     const uint32_t list = RSP_MEM_W_LOAD(0x30, 0xFC0) & 0xFFFFFF;
     const uint32_t size = RSP_MEM_W_LOAD(0x34, 0xFC0);
-    std::vector<uint8_t> retail_dmem(0x1000);
-    const uint32_t bases[] = {{0x000, 0x4C0, 0x5C0, 0x5B0, 0x5D0, 0x600, 0x640, 0x680}};
+    std::vector<uint8_t> A(0x1000), B(0x1000), Ard(kSpan), Brd(kSpan);
+    auto retail_run = [&](uint32_t n, std::vector<uint8_t>& dm, std::vector<uint8_t>& rd) {{
+        std::memcpy(rdram, snap.data(), kSpan);
+        std::memcpy(dmem, dmem_snap, 0x1000);
+        RSP_MEM_W_STORE(0x34, 0xFC0, n * 8);
+        if (n) aspMain_run(rdram, ucode_addr);
+        std::memcpy(dm.data(), dmem, 0x1000);
+        std::memcpy(rd.data(), rdram, kSpan);
+    }};
+    auto word = [&](uint32_t a) {{
+        auto r = [&](uint32_t x) {{ return snap[x ^ 3]; }};
+        return (uint32_t(r(a)) << 24) | (r(a + 1) << 16) | (r(a + 2) << 8) | r(a + 3);
+    }};
+    pw64_hle_states_save();
     for (uint32_t n = 1; n * 8 <= size; n++) {{
+        pw64_hle_states_restore();
+        retail_run(n - 1, A, Ard);
+        retail_run(n, B, Brd);
+        // HLE state (segments, buffers, volumes) from commands 1..n-1, then
+        // the microcode's own DMEM, then command n alone.
         std::memcpy(rdram, snap.data(), kSpan);
-        std::memcpy(dmem, dmem_snap, 0x1000);
-        RSP_MEM_W_STORE(0x34, 0xFC0, n * 8);
-        aspMain_run(rdram, ucode_addr);
-        std::memcpy(retail_dmem.data(), dmem, 0x1000);
-        std::vector<uint8_t> retail_rd(snap.size());
-        std::memcpy(retail_rd.data(), rdram, kSpan);
-        std::memcpy(rdram, snap.data(), kSpan);
-        std::memcpy(dmem, dmem_snap, 0x1000);
-        RSP_MEM_W_STORE(0x34, 0xFC0, n * 8);
         pw64_hle_reset();
-        aspMain_hle_run(rdram, ucode_addr);
-        const uint8_t* w = pw64_hle_work();
-        auto rd = [&](const uint8_t* m, uint32_t a) {{ return m[a ^ 3]; }};
-        const uint32_t a = list + (n - 1) * 8;
-        const uint32_t w0 = (uint32_t(rd(snap.data(), a)) << 24) | (rd(snap.data(), a + 1) << 16) | (rd(snap.data(), a + 2) << 8) | rd(snap.data(), a + 3);
-        const uint32_t w1 = (uint32_t(rd(snap.data(), a + 4)) << 24) | (rd(snap.data(), a + 5) << 16) | (rd(snap.data(), a + 6) << 8) | rd(snap.data(), a + 7);
-        // DMEM is stored byte-swapped per word like RDRAM.
-        uint32_t best_base = 0, best = 0xFFFFFFFF;
-        for (uint32_t b : bases) {{
-            uint32_t d = 0;
-            for (uint32_t i = 0; i + b < 0xFC0 && i < 0x1000 - 0x40; i++) d += (retail_dmem[(b + i) ^ 3] != w[i]);
-            if (d < best) {{ best = d; best_base = b; }}
+        for (uint32_t k = 1; k < n; k++) {{
+            const uint32_t kw0 = word(list + (k - 1) * 8);
+            const uint32_t op = (kw0 >> 24) & 0xF;
+            // Registers only: segments, buffers, volumes, codebook, loop state.
+            if (op == 7 || op == 8 || op == 9 || op == 11 || op == 15) pw64_hle_step(rdram, kw0, word(list + (k - 1) * 8 + 4));
+        }}
+        uint8_t* w = pw64_hle_work();
+        for (uint32_t i = 0; i < kLen; i++) w[i] = A[(kBase + i) ^ 3];
+        std::memcpy(rdram, Ard.data(), kSpan);
+        const uint32_t w0 = word(list + (n - 1) * 8), w1 = word(list + (n - 1) * 8 + 4);
+        pw64_hle_step(rdram, w0, w1);
+        double e2 = 0, s2 = 0;
+        uint32_t changed = 0, wrong = 0;
+        for (uint32_t i = 0; i + 1 < kLen; i += 2) {{
+            const int a0 = int16_t((A[(kBase + i) ^ 3] << 8) | A[(kBase + i + 1) ^ 3]);
+            const int x = int16_t((B[(kBase + i) ^ 3] << 8) | B[(kBase + i + 1) ^ 3]);
+            const int y = int16_t((w[i] << 8) | w[i + 1]);
+            if (x != a0 || y != a0) {{
+                changed++;
+                if (x != y) wrong++;
+                e2 += double(x - y) * (x - y);
+                s2 += double(x) * x;
+            }}
         }}
         uint32_t rdiff = 0;
-        for (size_t i = 0; i < kSpan; i += 4) rdiff += std::memcmp(&retail_rd[i], &rdram[i], 4) != 0;
-        std::fprintf(stderr, "[pw64-bisect] cmd %3u op %2u w0 %08X w1 %08X : dmem diff %4u bytes (base %03X), rdram diff words %u\\n",
-                     n, (w0 >> 24) & 0xF, w0, w1, best, best_base, rdiff);
+        for (size_t i = 0; i < kSpan; i += 4) rdiff += std::memcmp(&Brd[i], &rdram[i], 4) != 0;
+        static int dumps = 0;
+        if (((w0 >> 24) & 0xF) == 3 && (w0 & 0x10000) && dumps < 2) {{
+            dumps++;
+            uint32_t hin, hout, hcnt; pw64_hle_io(&hin, &hout, &hcnt);
+            auto S = [&](const std::vector<uint8_t>& m, uint32_t a) {{ return int(int16_t((m[(kBase + a) ^ 3] << 8) | m[(kBase + a + 1) ^ 3])); }};
+            auto H = [&](uint32_t a) {{ return int(int16_t((w[a] << 8) | w[a + 1])); }};
+            std::fprintf(stderr, "[pw64-env] in %X out %X count %X\\n", hin, hout, hcnt);
+            const uint32_t bufs[4] = {{hout, 0x580, 0x6C0, 0x800}};
+            for (int b = 0; b < 4; b++) {{
+                std::fprintf(stderr, "[pw64-env] buf %X pre/retail/hle:", bufs[b]);
+                for (int k = 0; k < 40; k += 4) std::fprintf(stderr, " %d/%d/%d", S(A, bufs[b] + k * 2), S(B, bufs[b] + k * 2), H(bufs[b] + k * 2));
+                std::fprintf(stderr, "\\n");
+            }}
+            std::fprintf(stderr, "[pw64-env] input:");
+            for (int k = 0; k < 40; k += 4) std::fprintf(stderr, " %d", S(A, hin + k * 2));
+            std::fprintf(stderr, "\\n");
+        }}
+        std::fprintf(stderr, "[pw64-iso] cmd %3u op %2u w0 %08X w1 %08X : changed %4u samples, wrong %4u, SNR %6.1f dB, rdram words off %u\\n",
+                     n, (w0 >> 24) & 0xF, w0, w1, changed, wrong, e2 > 0 ? 10 * std::log10(s2 / e2) : 999.0, rdiff);
     }}
+    pw64_hle_states_restore();
     std::fflush(stderr);
 }}
 
@@ -90,11 +133,11 @@ static RspExitReason pw64_audio_compare(uint8_t* rdram, uint32_t ucode_addr) {{
         const uint32_t w1 = (uint32_t(rd(a + 4)) << 24) | (rd(a + 5) << 16) | (rd(a + 6) << 8) | rd(a + 7);
         const uint32_t op = (w0 >> 24) & 0xF;
         if (op == 8 && !((w0 >> 16) & 0x08)) count = w1 & 0xFFFF;
-        if (op == 6) {{ out_addr = w1 & 0xFFFFFF; out_len = count; }}
+        if (op == 6 && count >= out_len) {{ out_addr = w1 & 0xFFFFFF; out_len = count; }}
     }}
 
-    static const bool bisect = std::getenv("PW64_AUDIO_BISECT") != nullptr;
-    if (bisect && tasks == 300) {{
+    static const long bisect_at = std::getenv("PW64_AUDIO_BISECT") ? std::atol(std::getenv("PW64_AUDIO_BISECT")) : -1;
+    if (bisect_at >= 0 && (long)tasks == bisect_at) {{
         pw64_audio_bisect(rdram, ucode_addr, before, dmem_before);
         std::memcpy(rdram, before.data(), kSpan);
         std::memcpy(dmem, dmem_before, 0x1000);
@@ -105,7 +148,7 @@ static RspExitReason pw64_audio_compare(uint8_t* rdram, uint32_t ucode_addr) {{
     std::memcpy(dmem, dmem_before, 0x1000);
     aspMain_hle_run(rdram, ucode_addr);
 
-    if (++tasks % 30 == 1 && out_len) {{
+    if (++tasks % 10 == 1 && out_len) {{
         double err = 0, sig = 0;
         int maxd = 0;
         for (uint32_t i = 0; i + 1 < out_len; i += 2) {{

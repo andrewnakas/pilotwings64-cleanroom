@@ -50,7 +50,7 @@ CLEAN_ASM_FILES = ("entrypoint.s", "header.s", "kernel/decompress_mio0.s",
                    "libultra/libc/bcopy.s", "libultra/libc/bzero.s", "libultra/gu/sqrtf.s")
 
 # Fixed slot sizes for the asset segments (audio_tbl is last and may grow).
-RESERVE = {"filetable": 0x2000, "filesys": 0x700000, "audio_seq": 0x20000, "audio_ctl": 0x8000}
+RESERVE = {"filetable": 0x2000, "filesys": 0x700000, "audio_seq": 0x40000, "audio_ctl": 0x8000}
 
 DATA_4D4F0 = """.include "macro.inc"
 .section .data, "wa"
