@@ -1,0 +1,8 @@
+external/
+__pycache__/
+*.pyc
+/build/
+*.z64
+*.n64
+*.v64
+.pytest_cache/
