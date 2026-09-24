@@ -291,7 +291,8 @@
      32
     ],
     "kind": "icon",
-    "text": "HANG GLIDER"
+    "text": "HANG GLIDER",
+    "icon": "HANG GLIDER"
    },
    {
     "rect": [
@@ -301,7 +302,8 @@
      32
     ],
     "kind": "icon",
-    "text": "ROCKET BELT"
+    "text": "ROCKET BELT",
+    "icon": "ROCKET BELT"
    },
    {
     "rect": [
@@ -311,7 +313,8 @@
      32
     ],
     "kind": "icon",
-    "text": "GYROCOPTER"
+    "text": "GYROCOPTER",
+    "icon": "GYROCOPTER"
    },
    {
     "rect": [
@@ -514,7 +517,8 @@
      32
     ],
     "kind": "icon",
-    "text": "CANNONBALL"
+    "text": "CANNONBALL",
+    "icon": "CANNONBALL"
    },
    {
     "rect": [
@@ -524,7 +528,8 @@
      32
     ],
     "kind": "icon",
-    "text": "SKY DIVING"
+    "text": "SKY DIVING",
+    "icon": "SKY DIVING"
    },
    {
     "rect": [
@@ -534,7 +539,8 @@
      32
     ],
     "kind": "icon",
-    "text": "JUMBLE HOPPER"
+    "text": "JUMBLE HOPPER",
+    "icon": "JUMBLE HOPPER"
    },
    {
     "rect": [
@@ -630,7 +636,8 @@
      26
     ],
     "kind": "icon",
-    "text": "BIRDMAN"
+    "text": "BIRDMAN",
+    "icon": "BIRDMAN"
    },
    {
     "rect": [
@@ -695,7 +702,8 @@
      32
     ],
     "kind": "icon",
-    "text": "CANNONBALL"
+    "text": "CANNONBALL",
+    "icon": "CANNONBALL"
    },
    {
     "rect": [
@@ -705,7 +713,8 @@
      32
     ],
     "kind": "icon",
-    "text": "SKY DIVING"
+    "text": "SKY DIVING",
+    "icon": "SKY DIVING"
    },
    {
     "rect": [
@@ -715,7 +724,8 @@
      32
     ],
     "kind": "icon",
-    "text": "JUMBLE HOPPER"
+    "text": "JUMBLE HOPPER",
+    "icon": "JUMBLE HOPPER"
    }
   ]
  },
@@ -730,7 +740,8 @@
      26
     ],
     "kind": "icon",
-    "text": "BIRDMAN"
+    "text": "BIRDMAN",
+    "icon": "BIRDMAN"
    }
   ]
  },
@@ -744,7 +755,8 @@
      36,
      22
     ],
-    "kind": "icon"
+    "kind": "icon",
+    "icon": "HANG GLIDER"
    },
    {
     "rect": [
@@ -753,7 +765,8 @@
      36,
      22
     ],
-    "kind": "icon"
+    "kind": "icon",
+    "icon": "ROCKET BELT"
    },
    {
     "rect": [
@@ -762,7 +775,8 @@
      36,
      22
     ],
-    "kind": "icon"
+    "kind": "icon",
+    "icon": "GYROCOPTER"
    },
    {
     "rect": [
@@ -934,7 +948,8 @@
      36,
      23
     ],
-    "kind": "icon"
+    "kind": "icon",
+    "icon": "CANNONBALL"
    },
    {
     "rect": [
@@ -943,7 +958,8 @@
      36,
      23
     ],
-    "kind": "icon"
+    "kind": "icon",
+    "icon": "SKY DIVING"
    },
    {
     "rect": [
@@ -952,7 +968,8 @@
      36,
      23
     ],
-    "kind": "icon"
+    "kind": "icon",
+    "icon": "JUMBLE HOPPER"
    }
   ]
  },
@@ -966,7 +983,8 @@
      36,
      18
     ],
-    "kind": "icon"
+    "kind": "icon",
+    "icon": "BIRDMAN"
    }
   ]
  }

@@ -1,0 +1,24 @@
+{
+ "_comment": "Menu pictures rendered from kept models (renders.py). Model ids are the game's model slots (decomp uv_dobj.h names in comments). yaw/pitch in radians, crop = vertical slice of the model to frame.",
+ "icons": {
+  "HANG GLIDER": {"model": "0x110", "yaw": 0.6, "pitch": 0.3, "_name": "MODEL_HG_LARK"},
+  "ROCKET BELT": {"model": "0x11e", "yaw": 0.6, "pitch": -0.2, "_name": "MODEL_RB_LARK"},
+  "GYROCOPTER": {"model": "0x127", "yaw": 0.6, "pitch": -0.3, "_name": "MODEL_GYRO_LARK"},
+  "CANNONBALL": {"model": "0x135", "yaw": 0.6, "pitch": -0.2, "_name": "MODEL_CANNONB_LARK_LAUNCHED"},
+  "SKY DIVING": {"model": "0x144", "yaw": 0.6, "pitch": -0.2, "_name": "MODEL_PARACHUTE_LARK"},
+  "JUMBLE HOPPER": {"model": "0x150", "yaw": 0.6, "pitch": -0.2, "_name": "MODEL_JUMBLEH_LARK"},
+  "BIRDMAN": {"model": "0x13b", "yaw": 0.3, "pitch": -0.2, "_name": "MODEL_BIRDMAN_LARK"}
+ },
+ "portraits": {
+  "_note": "pilot_select.c: blits 61-63 left column, 64-66 right column; pilot index = blit - 61",
+  "61": {"model": "0x15a", "yaw": 0.25, "pitch": 0.05, "crop": [0, 0.42], "fit": 0.85},
+  "62": {"model": "0x15b", "yaw": 0.25, "pitch": 0.05, "crop": [0, 0.42], "fit": 0.85},
+  "63": {"model": "0x15c", "yaw": 0.25, "pitch": 0.05, "crop": [0, 0.42], "fit": 0.85},
+  "64": {"model": "0x15d", "yaw": 0.25, "pitch": 0.05, "crop": [0, 0.42], "fit": 0.85},
+  "65": {"model": "0x15e", "yaw": 0.25, "pitch": 0.05, "crop": [0, 0.42], "fit": 0.85},
+  "66": {"model": "0x15f", "yaw": 0.25, "pitch": 0.05, "crop": [0, 0.42], "fit": 0.85}
+ },
+ "groups": {
+  "9": {"_what": "title screen pilot group", "back": ["0x15b", "0x15d", "0x15f"], "front": ["0x15a", "0x15c", "0x15e"]}
+ }
+}

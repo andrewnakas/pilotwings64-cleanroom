@@ -262,6 +262,15 @@ def _from_digest(tid, d, tw, rows):
     rgba = vis[ry][:, rx]
     if "alpha2" in d:
         rgba[..., 3] = _unpack_alpha2(d["alpha2"], tw, rows)
+    if "shape2" in d:
+        # intensity-as-coverage: our soft version of the kept 2-bit outline
+        a = _unpack_alpha2(d["shape2"], tw, rows)
+        for _ in range(2 if (a > 0).mean() > 0.03 else 0):     # keep sparse points (stars) crisp
+            a = (a + np.roll(a, 1, 0) + np.roll(a, -1, 0) + np.roll(a, 1, 1) + np.roll(a, -1, 1)) / 5
+        peak = max(1.0, float(np.max(np.asarray(d["grid"], np.float32)[:, :3])))
+        lum = np.clip(a / 255.0 * max(peak, 200.0), 0, 255)
+        rgba[..., :3] = lum[..., None] * _detail(_h("shape", tid, d["start"]), tw, rows, 0.08)[..., None]
+        rgba[..., 3] = lum
     return np.clip(rgba, 0, 255).astype(np.uint8)
 
 
@@ -706,6 +715,63 @@ def render_label(label, w, h, grid, n=8):
     return rgba
 
 
+_MODELS = None
+
+
+def _models():
+    """Kept models for UI renders (renders.py), built once per run."""
+    global _MODELS
+    if _MODELS is None:
+        from . import renders
+        _MODELS = renders.Models(Spec())
+    return _MODELS
+
+
+def _render_cfg(kind):
+    from . import renders
+    return renders.config().get(kind, {})
+
+
+def _render_icon(name, w, h):
+    from . import renders
+    item = renders.config()["icons"].get(name)
+    if not item or w < 4 or h < 4:
+        return None
+    return renders.picture(_models(), item, w, h)
+
+
+def render_portrait(bid, w, h, grid):
+    from . import renders
+    item = renders.config()["portraits"].get(str(bid))
+    if not item:
+        return None
+    g = np.asarray(grid, np.float32).reshape(8, 8, 4)
+    img = renders.backdrop(w, h, g[0, :, :3].mean(0) * 1.1, g[-1, :, :3].mean(0) * 0.8)
+    return renders.composite(img, renders.picture(_models(), item, w, h), 0, 0)
+
+
+def render_group(bid, w, h):
+    """Pilots standing in two rows (title screen): our own composition."""
+    from . import renders
+    item = renders.config()["groups"].get(str(bid))
+    if not item:
+        return None
+    img = np.zeros((h, w, 4), np.float32)
+    tallest = max(renders.height(_models(), m) for m in item["back"] + item["front"])
+    n = len(item["back"]) + len(item["front"])
+    slot = w / n
+    # back row a little smaller and higher, front row overlapping in between
+    for row, size, foot in (("back", 0.78, 0.80), ("front", 0.95, 1.0)):
+        ppu = h * size / tallest
+        for i, m in enumerate(item[row]):
+            cx = (2 * i + (0.5 if row == "back" else 1.5)) * slot + slot * 0.25
+            pw = int(slot * 2.2)
+            pic = renders.picture(_models(), {"model": m, "yaw": 0.35 - 0.35 * i, "pitch": 0.05,
+                                              "px_per_unit": ppu}, pw, int(h * foot))
+            renders.composite(img, pic, int(cx - pw / 2), 0)
+    return img
+
+
 PANEL_EDGE = np.array([14, 22, 70], np.float32)
 PANEL_LINE = np.array([46, 96, 236], np.float32)
 
@@ -729,6 +795,15 @@ def render_panel(canvas, label):
         if kind == "icon":
             cell[:] = base[y:y + ch, x:x + cw]
             cell[..., 3] = 255
+            if c.get("icon"):
+                from . import renders
+                top = base[y + 2, x + cw // 2, :3]
+                bot = base[y + ch - 3, x + cw // 2, :3]
+                cell[:] = renders.backdrop(cw, ch, top * 1.05, bot * 0.85)
+                cap = max(7, ch // 4) if c.get("text") else 0
+                pic = _render_icon(c["icon"], cw, ch - cap)
+                if pic is not None:
+                    renders.composite(cell, pic, 0, 0)
         else:
             col = base[y + ch // 2, x + cw // 2, :3]
             shade = np.linspace(1.12, 0.88, ch, dtype=np.float32)[:, None, None]
@@ -764,6 +839,12 @@ def gen_uvbt(bid, ir):
                 vis[..., 3] = _unpack_alpha2(ir["alpha2"], canvas_w, h)[:, :w]
             canvas = np.zeros((h, canvas_w, 4), np.float32)
             canvas[:, :w] = vis
+        elif str(bid) in _render_cfg("portraits"):
+            canvas = np.zeros((h, canvas_w, 4), np.float32)
+            canvas[:, :w] = render_portrait(bid, w, h, ir["grid8"])
+        elif str(bid) in _render_cfg("groups"):
+            canvas = np.zeros((h, canvas_w, 4), np.float32)
+            canvas[:, :w] = render_group(bid, w, h)
         elif label and label["style"] != "panel":
             vis = render_label(label, w, h, ir["grid8"])
             canvas = np.zeros((h, canvas_w, 4), np.float32)

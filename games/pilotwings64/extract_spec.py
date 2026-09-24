@@ -99,6 +99,12 @@ def texture_digest(ir):
              "grid": _grid(vis, GRID)}
         if texlayout.has_alpha(t["fmt"]) and (rgba[..., 3] < 250).any():
             d["alpha2"] = _alpha2(rgba)
+        elif t["fmt"] == texfmt.I and (rgba[..., 0] < 16).mean() > 0.25:
+            # Shape textures (clouds, glows, stars): the intensity is the
+            # coverage, so its 2-bit outline is kept like an alpha outline.
+            shape = rgba.copy()
+            shape[..., 3] = rgba[..., 0]
+            d["shape2"] = _alpha2(shape)
         out.append(d)
     return out
 
