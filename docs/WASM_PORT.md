@@ -39,6 +39,27 @@ These are the parts of F3D the game uses, and each needs implementing:
 
 The desktop port's per-frame logs of the combiners and render modes the game actually uses give a finite list to cover first.
 
+## Progress
+
+**Stage 1 is done (2026-09-23).** In headless Edge, the Emscripten build:
+- boots the clean image and runs the recompiled game;
+- reaches the TITLE state at 60 fps, receiving one display list per frame;
+- plays audio through our HLE into WebAudio.
+
+Build commands:
+
+```sh
+python ports/wasm/setup_port.py <desktop port> E:/n64web/port        # copy + web patches
+emcmake cmake -S ports/wasm -B E:/n64web/build -G Ninja -DPORT=E:/n64web/port
+cmake --build E:/n64web/build
+python ports/wasm/serve.py E:/n64web/build     # http://localhost:8064/pw64.html
+```
+
+Web-specific pieces:
+- `web_stubs.cpp`: no mods (LiveRecomp JIT), RT64 hooks stubbed.
+- `web_audio.*`: SDL audio calls redirected to a main-thread WebAudio queue.
+- `web_renderer.cpp`: null renderer for now; stage 2 replaces it.
+
 ## Stages
 
 1. **Headless boot in Node.**
