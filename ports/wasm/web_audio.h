@@ -22,3 +22,24 @@ Uint32 pw64web_audio_queued_bytes(void);
 #define SDL_CloseAudioDevice(dev) ((void)0)
 #define SDL_QueueAudio(dev, data, bytes) pw64web_audio_queue(data, bytes)
 #define SDL_GetQueuedAudioSize(dev) pw64web_audio_queued_bytes()
+
+// ---- Input: keyboard state (by SDL scancode) and the first gamepad (Gamepad
+// API, standard mapping) are written by the page's main thread into shared
+// memory; these redirect the port's SDL input calls to that snapshot.
+#ifdef __cplusplus
+extern "C" {
+#endif
+const Uint8* pw64web_keys(void);
+int pw64web_poll_event(SDL_Event* e);
+SDL_bool pw64web_pad_button(int button);
+Sint16 pw64web_pad_axis(int axis);
+#ifdef __cplusplus
+}
+#endif
+#define SDL_GetKeyboardState(n) pw64web_keys()
+#define SDL_PollEvent(e) pw64web_poll_event(e)
+#define SDL_GameControllerOpen(i) ((SDL_GameController*)1)
+#define SDL_GameControllerClose(c) ((void)0)
+#define SDL_GameControllerGetButton(c, b) pw64web_pad_button(b)
+#define SDL_GameControllerGetAxis(c, a) pw64web_pad_axis(a)
+#define SDL_GameControllerRumble(c, lo, hi, ms) (0)

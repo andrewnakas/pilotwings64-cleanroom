@@ -54,7 +54,10 @@ add_executable(pw64 ${APP}/main.cpp ${APP}/callbacks.cpp ${APP}/rom.cpp ${APP}/s
                     ${APP}/testdrive.cpp ${APP}/audio_hle.cpp ${APP}/resample.cpp ${APP}/audiodiag.cpp
                     ${APP}/crash_handler.cpp
                     ${CMAKE_CURRENT_SOURCE_DIR}/web_renderer.cpp
-                    ${CMAKE_CURRENT_SOURCE_DIR}/web_audio.cpp)
+                    ${CMAKE_CURRENT_SOURCE_DIR}/web_rdp.cpp
+                    ${CMAKE_CURRENT_SOURCE_DIR}/web_audio.cpp
+                    ${CMAKE_CURRENT_SOURCE_DIR}/web_input.cpp)
+set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/web_rdp.cpp PROPERTIES COMPILE_OPTIONS "-O3;-ffast-math")
 set_source_files_properties(${APP}/callbacks.cpp PROPERTIES COMPILE_OPTIONS
                             "-include;${CMAKE_CURRENT_SOURCE_DIR}/web_audio.h")
 target_include_directories(pw64 PRIVATE ${PORT}/include ${RT}/thirdparty/xxHash ${RT}/N64Recomp/include
@@ -64,7 +67,9 @@ target_compile_options(pw64 PRIVATE -sUSE_SDL=2)
 target_link_options(pw64 PRIVATE ${THREAD_FLAGS} -sUSE_SDL=2 -sUSE_WEBGL2=1 -sFULL_ES3=1
   -sPROXY_TO_PTHREAD=1 -sPTHREAD_POOL_SIZE=24 -sALLOW_MEMORY_GROWTH=1 -sINITIAL_MEMORY=256MB
   -sSTACK_SIZE=4MB -sDEFAULT_PTHREAD_STACK_SIZE=2MB -sOFFSCREENCANVAS_SUPPORT=1
-  -sEXIT_RUNTIME=0 -Wl,--error-limit=0 -sFORCE_FILESYSTEM=1 -sEXPORTED_RUNTIME_METHODS=FS,callMain
-  --pre-js ${CMAKE_CURRENT_SOURCE_DIR}/web_pre.js
-  --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/../../build/pilotwings64.clean.z64@/pilotwings64.clean.z64)
+  -sEXIT_RUNTIME=0 -Wl,--error-limit=0 -sEXPORTED_RUNTIME_METHODS=FS,callMain,ENV -sFORCE_FILESYSTEM=1
+  "SHELL:--pre-js ${CMAKE_CURRENT_SOURCE_DIR}/web_pre.js"
+  "SHELL:--shell-file ${CMAKE_CURRENT_SOURCE_DIR}/shell.html"
+  "SHELL:--preload-file ${CMAKE_CURRENT_SOURCE_DIR}/../../build/pilotwings64.clean.z64@/pilotwings64.clean.z64"
+  "SHELL:--preload-file ${PORT}/tools/scripts@/scripts")
 set_target_properties(pw64 PROPERTIES SUFFIX ".html")

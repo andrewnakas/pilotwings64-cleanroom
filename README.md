@@ -27,11 +27,15 @@ retail ROM ──► extract_spec (dirty room) ──► spec/       (committed:
 | **Pack** (`pack.py`) | Writes the file table, the filesystem and the audio segments at the retail segment offsets. The header is written from scratch. |
 | **Taint** (`cleanroom/taint.py`, `streams.py`) | Collects every expressive retail region, including decompressed chunks: texels, meshes, display lists, animation poses, text, glyphs, samples and note data. The build fails if any generated stream shares a run of 32 bytes or more with them. |
 
+## Play in the browser
+
+**https://andrewnakas.github.io/pilotwings64-cleanroom/** (WebAssembly; keyboard or gamepad; best in Chrome or Edge)
+
 ## Status
 
 **Pilotwings 64 is playable without the ROM on Windows.** The executable is built from the decompilation with a native IDO toolchain, and the image is built from `spec/`. Both are recompiled with N64Recomp and rendered by RT64, with our own audio microcode HLE.
 
-The boot, menus, every vehicle and flight have been tested in game. A WebAssembly port is in progress: see [docs/WASM_PORT.md](docs/WASM_PORT.md).
+The boot, menus, every vehicle and flight have been tested in game. It also runs in the browser: see [docs/WASM_PORT.md](docs/WASM_PORT.md).
 
 ## What is regenerated
 

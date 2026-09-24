@@ -41,6 +41,18 @@ The desktop port's per-frame logs of the combiners and render modes the game act
 
 ## Progress
 
+**Playable at https://andrewnakas.github.io/pilotwings64-cleanroom/ (2026-09-24).**
+
+What was needed beyond stage 1:
+- **Renderer:** `web_rdp.*` is a software F3D + RDP that doesn't use WebGL.
+  - It covers the matrix stack, lighting, fog, near clipping, TMEM loads with the odd-row swizzle, all texel formats, the generic 2-cycle combiner and blender, alpha compare, coverage-as-alpha, fill/texture rectangles, and w-based depth.
+  - The front end records RDP commands. Four band threads replay them, each drawing its own rows.
+  - The game's coverage-bit shadow columns are emulated as a z-pass shadow volume.
+- **RDRAM:** 32 MB on the web. The desktop 4 GB reservation wraps to 0 on wasm32.
+- **Input:** `web_input.cpp` plus `web_pre.js`. Keyboard and Gamepad API state live in shared memory, and the SDL input calls are redirected to them.
+- **Page:** `shell.html`, `coi-sw.js` (a service worker for cross-origin isolation on GitHub Pages) and `make_site.py`, which is pushed to the `gh-pages` branch.
+- **Dev hooks:** `?script=flight`, `?keys=6:Enter` and `?dump=10,20`, used with `headless_shot.py` for headless checks.
+
 **Stage 1 is done (2026-09-23).** In headless Edge, the Emscripten build:
 - boots the clean image and runs the recompiled game;
 - reaches the TITLE state at 60 fps, receiving one display list per frame;

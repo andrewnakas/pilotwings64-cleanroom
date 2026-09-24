@@ -921,10 +921,11 @@ def gen_uvft(chunks):
             # unit symbols in the HUD number fonts: a wide 'k' cell holds
             # the speed unit, 'm' is metres
             if ch == "k" and cw > chh * 1.2:
-                line = strokefont.render_line("km/h", chh, aspect=0.7)
+                line = _fit_line("km/h", cw, chh, False)
                 mask = np.zeros((chh, cw), np.float32)
                 n = min(cw, line.shape[1])
-                mask[:, :n] = line[:, :n]
+                oy = (chh - line.shape[0]) // 2
+                mask[oy:oy + line.shape[0], :n] = line[:, :n]
             else:
                 mask = strokefont.render(ch.upper(), cw, chh)
         else:

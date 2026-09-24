@@ -10,7 +10,7 @@ import shutil
 import sys
 from pathlib import Path
 
-COPY = ["src", "include", "RecompiledFuncs", "RecompiledPatches",
+COPY = ["src", "include", "tools/scripts", "RecompiledFuncs", "RecompiledPatches",
         "lib/N64ModernRuntime/ultramodern", "lib/N64ModernRuntime/librecomp",
         "lib/N64ModernRuntime/thirdparty", "lib/N64ModernRuntime/N64Recomp/include",
         "lib/N64ModernRuntime/N64Recomp/lib/rabbitizer/include",
@@ -33,6 +33,11 @@ PATCHES = [
     ("lib/N64ModernRuntime/librecomp/include/librecomp/mods.hpp",
      "        return (size_t(def.section_rom) << 32) | size_t(def.function_vram) | size_t(def.at_return ? 1 : 0);",
      "        return size_t((uint64_t(def.section_rom) << 32 | uint64_t(def.function_vram) | uint64_t(def.at_return ? 1 : 0)) % 0xFFFFFFFBull);"),
+    # wasm32: size_t is 32 bits, so the desktop's 4 GB reservation wraps to 0.
+    # The game uses 4-8 MB of RDRAM; give it 32 MB (recomp heap from 16 MB).
+    ("lib/N64ModernRuntime/librecomp/include/librecomp/addresses.hpp",
+     "    constexpr size_t mem_size = 512ULL * 1024ULL * 1024ULL;\n    // 4GB (the full address space)\n    constexpr size_t allocation_size = 4096ULL * 1024ULL * 1024ULL;",
+     "#if defined(__EMSCRIPTEN__)\n    constexpr size_t mem_size = 32ULL * 1024ULL * 1024ULL;\n    constexpr size_t allocation_size = mem_size;\n#else\n    constexpr size_t mem_size = 512ULL * 1024ULL * 1024ULL;\n    // 4GB (the full address space)\n    constexpr size_t allocation_size = 4096ULL * 1024ULL * 1024ULL;\n#endif"),
     # Mods patch native code; the web build has no mods, so the patcher aborts.
     ("lib/N64ModernRuntime/librecomp/src/mods.cpp",
      "#elif defined(__ARM_ARCH_ISA_A64)\n#   define IS_ARM64\n#else\n#   error \"Unsupported architecture!\"",
