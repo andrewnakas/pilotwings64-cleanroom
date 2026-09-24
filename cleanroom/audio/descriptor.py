@@ -22,17 +22,45 @@ def _frames(n, max_frames=24, min_len=256):
 
 
 def _f0(frame, rate):
-    x = frame - frame.mean()
-    if np.abs(x).max() < 1e-6 or len(x) < 64:
+    """YIN fundamental estimate (cumulative-mean-normalised difference with an
+    absolute threshold), which avoids the octave-too-high picks plain
+    autocorrelation makes on sounds with a strong second harmonic.
+    Returns (f0 Hz, periodicity 0..1)."""
+    x = np.asarray(frame, np.float64)
+    x = x - x.mean()
+    if np.abs(x).max() < 1e-6 or len(x) < 128:
         return 0.0, 0.0
-    ac = np.correlate(x, x, "full")[len(x) - 1:]
-    ac /= ac[0] + 1e-12
-    lo = int(rate / 1500)  # up to 1.5 kHz fundamentals
-    hi = min(len(ac) - 1, int(rate / 40))
+    lo = max(2, int(rate / 1500))
+    hi = min(len(x) // 2, int(rate / 35))
     if hi <= lo + 2:
         return 0.0, 0.0
-    k = lo + int(np.argmax(ac[lo:hi]))
-    return float(rate / k), float(max(0.0, ac[k]))
+    n = len(x) - hi
+    xx = np.concatenate([[0.0], np.cumsum(x * x)])
+    d = np.empty(hi + 1)
+    d[0] = 0.0
+    e0 = xx[n] - xx[0]
+    for tau in range(1, hi + 1):
+        et = xx[tau + n] - xx[tau]
+        d[tau] = e0 + et - 2.0 * np.dot(x[:n], x[tau:tau + n])
+    cmnd = np.ones(hi + 1)
+    cs = np.cumsum(d[1:])
+    cmnd[1:] = d[1:] * np.arange(1, hi + 1) / np.maximum(cs, 1e-12)
+    cand = np.nonzero(cmnd[lo:hi] < 0.15)[0]
+    if len(cand):
+        k = lo + int(cand[0])
+        while k + 1 < hi and cmnd[k + 1] < cmnd[k]:
+            k += 1
+    else:
+        k = lo + int(np.argmin(cmnd[lo:hi]))
+    # parabolic refinement
+    if 1 <= k < hi:
+        a, b, c = cmnd[k - 1], cmnd[k], cmnd[k + 1]
+        den = a - 2 * b + c
+        shift = 0.5 * (a - c) / den if abs(den) > 1e-12 else 0.0
+    else:
+        shift = 0.0
+    period = k + float(np.clip(shift, -0.5, 0.5))
+    return float(rate / period), float(np.clip(1.0 - cmnd[k], 0.0, 1.0))
 
 
 def describe(samples, rate):
@@ -51,7 +79,7 @@ def describe(samples, rate):
             m = (freqs >= lo) & (freqs < hi)
             p = spec[m].mean() if m.any() else 0.0
             bands.append(int(max(FLOOR_DB, round(10 * np.log10(p + 1e-12)))))
-        f0, harm = _f0(seg[: min(len(seg), 2048)], rate)
+        f0, harm = _f0(seg[: min(len(seg), 4096)], rate)
         frames.append({"f0": round(f0, 1), "h": round(harm, 2), "db": bands,
                        "rms": int(max(FLOOR_DB, round(20 * np.log10(np.sqrt((seg ** 2).mean()) + 1e-9))))})
     return {"frames": frames}
@@ -66,6 +94,24 @@ def _shape_noise(n, band_amp, rate, rng):
     return np.fft.irfft(spec * gain, n)
 
 
+def _steady_f0(frames):
+    """Snap isolated octave jumps back to the sound's median pitch (a tone
+    rarely changes octave frame to frame; a detector often does)."""
+    tonal = [f["f0"] for f in frames if f["f0"] > 20 and f["h"] > 0.3]
+    if len(tonal) < 2:
+        return frames
+    med = float(np.median(tonal))
+    out = []
+    for f in frames:
+        f = dict(f)
+        if f["f0"] > 20:
+            k = round(np.log2(f["f0"] / med))
+            if k != 0:
+                f["f0"] = f["f0"] / 2 ** k
+        out.append(f)
+    return out
+
+
 def synthesize(desc, n, rate, seed=0):
     """Waveform of n samples following `desc`, normalised to the frames' RMS."""
     rng = np.random.default_rng(seed)
@@ -73,6 +119,7 @@ def synthesize(desc, n, rate, seed=0):
     if not frames or n <= 0:
         return np.zeros(max(n, 0), np.float32)
     k = len(frames)
+    frames = _steady_f0(frames)
     bounds = np.linspace(0, n, k + 1).astype(int)
     out = np.zeros(n)
     phase = 0.0
