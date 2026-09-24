@@ -27,35 +27,55 @@ retail ROM ──► extract_spec (dirty room) ──► spec/       (committed:
 | **Pack** (`pack.py`) | Writes the file table, the filesystem and the audio segments at the retail segment offsets. The header is written from scratch. |
 | **Taint** (`cleanroom/taint.py`, `streams.py`) | Collects every expressive retail region, including decompressed chunks: texels, meshes, display lists, animation poses, text, glyphs, samples and note data. The build fails if any generated stream shares a run of 32 bytes or more with them. |
 
-## What is regenerated (Pilotwings 64 graybox)
+## Status
+
+**Pilotwings 64 is playable without the ROM on Windows.** The executable is built from the decompilation with a native IDO toolchain, and the image is built from `spec/`. Both are recompiled with N64Recomp and rendered by RT64, with our own audio microcode HLE.
+
+The boot, menus, every vehicle and flight have been tested in game. A WebAssembly port is in progress: see [docs/WASM_PORT.md](docs/WASM_PORT.md).
+
+## What is regenerated
+
+Scope chosen for this build: **geometry + coarse colour, SFX envelopes + melodies, UI redrawn with our font.**
 
 | Retail asset | Clean replacement |
 |---|---|
-| 463 textures | Procedural texels in each slot's own format and mip layout. Terrain colours come from the kept geometry: water, sand, grass, rock, snow. |
-| 101 terrain contours | Kept positions and topology, with new planar UVs and new slope/height shading. |
-| 363 models | One box per render state, fitted to the kept bounds, with the same part hierarchy and transforms. |
-| 115 animations | Kept timing and part structure, posed at rest from the model's transforms. |
-| 102 blits, 9 fonts | Generated panels, and an original stroke font in the kept glyph cells. |
-| 439 text strings | Generated from each string's key. |
-| Music (31 sequences) + bank | A procedural composer and a new 5-instrument bank, keeping each sequence's tempo, length and looping. |
-| 120 SFX + bank | Synthesised effects with the same envelopes, key maps and loop points, encoded with our own VADPCM encoder. |
+| 463 textures | A 4x4 colour grid per TMEM region, a 2-bit alpha or coverage outline, and our own value-noise detail, in each slot's format and layout. Texels are TMEM-swizzled as the loader expects. |
+| Text inside textures and blits | Redrawn with our stroke font from label tables (`tex_labels.json`, `hud_labels.json`): the HUD words, menu buttons, class, level and island grids, and the photo prompts. |
+| Menu pictures | Rendered from the kept 3D models (`renders.py`, `ui_renders.json`): vehicle icons, pilot portraits and the title-screen pilot group. |
+| 9 fonts | Our stroke font in the kept glyph cells: proportional, with real lowercase and unit glyphs. |
+| Music and SFX banks | Every sample is resynthesised from a coarse descriptor (per-frame pitch, harmonicity and a 16-band envelope). Bank structure is kept. The melodies (note events) are kept and re-encoded. |
+| Text strings | Generated from each string's key. |
 
-Kept as facts, because the user chose this scope: terrain geometry, task and level placements, paths, demo recordings and the text lookup keys. These are listed separately in the spec (`"prov": "fact"`) so they can be replaced with original designs later.
+These are kept as facts (`"prov": "fact"` in `spec/`):
+- terrain, collision and model geometry;
+- animations;
+- environment colours;
+- task and level placements, paths and demos;
+- note events.
 
-## Use
+## Build and play (no ROM)
 
 ```sh
 pip install numpy pytest
-python -m cleanroom extract pilotwings64 "<retail rom or zip>"   # once, dirty room (spec/ is committed)
-python -m cleanroom build pilotwings64                            # -> build/pilotwings64.clean.z64
-python -m cleanroom taint pilotwings64 "<retail rom>" build/pilotwings64.clean.z64
-python -m cleanroom preview pilotwings64 build/pilotwings64.clean.z64
+python -m games.pilotwings64.build_code     # clean image + ELF from the decomp (native IDO)
+python -m games.pilotwings64.build_port     # N64Recomp + RT64 exe, image copied beside it
 python -m pytest tests
 ```
 
-A build needs no ROM. Tests that need one read `PW64_ROM`, or `~/Downloads/Pilotwings 64 (U) [!].zip` if that is unset, and skip when neither exists.
+`python -m cleanroom extract pilotwings64 <rom>` (dirty room) is only needed to regenerate `spec/`, which is committed. The taint check runs with `python -m games.pilotwings64.taint_report <rom> build/pilotwings64.clean.z64 build/pilotwings64.clean.elf`. It fails if any generated stream shares 32 or more bytes with retail expressive data.
 
-Running the game: see [docs/STATUS.md](docs/STATUS.md). The code segment still has to come from the decompilation build (milestone M4). `--code-from-retail` exists only for local asset-swap tests, and the image it produces must not be shared.
+## Better assets: briefs and overrides
+
+`python -m cleanroom briefs pilotwings64` writes a folder per texture and blit slot into `work/briefs/`:
+- `brief.json`: size, format, alpha, tiling, role and a suggested prompt;
+- `guide.png`: the coarse colour layout;
+- `mask.png`: the alpha outline.
+
+Feed them to a local image model (img2img or ControlNet), or to an artist. Drop results in `games/pilotwings64/overrides/textures/<hexid>.png` or `overrides/blits/<id>.png`. The build resizes, quantises and swizzles them. [docs/HARNESS.md](docs/HARNESS.md) records what this game taught us about bringing up the next one.
+
+## Legal note
+
+This repository contains no ROM data other than the facts listed above, which are derived from the retail ROM by `extract_spec.py`: geometry, placements and note events. All art, audio samples, fonts and text are generated. Pilotwings 64 is a trademark of Nintendo; this project is not affiliated with Nintendo or Paradigm.
 
 ## Layout
 
