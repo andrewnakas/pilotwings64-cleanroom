@@ -516,8 +516,18 @@ def _emit(vtx_table, local_vtx, local_tris):
     return cmds
 
 
+# The altitude "shadow columns" (decomp MODEL_*_SHADOW_COLUMN): translucent
+# black prisms from the vehicle to the ground. The N64 confines them to the
+# ground with coverage bits that neither RT64 nor our web renderer emulate, so
+# they show as a black plane under the player. Their vertices are made fully
+# transparent (the game blends them with FORCE_BL, so alpha 0 draws nothing).
+SHADOW_COLUMNS = {0x112, 0x120, 0x129, 0x13D}   # HG, RB, GYRO, BIRDMAN
+
+
 def gen_uvmd(mid, ir, tex_dims):
     if "vtx" in ir:
+        if mid in SHADOW_COLUMNS:
+            return {**ir, "vtx": [v[:9] + [0] for v in ir["vtx"]]}
         return ir  # full model kept as a fact
     hue = (_h("model", mid) % 360) / 360.0
     r, g, b = colorsys.hsv_to_rgb(hue, 0.35, 0.95)
