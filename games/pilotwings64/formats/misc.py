@@ -90,3 +90,49 @@ def build_uvan_part(p: dict) -> bytes:
         w.f32s(k["q"]); w.s16(k["frame"]); w.u16(k["flags"])
     w.bytes(bytes.fromhex(p["tail"]))
     return w.getvalue()
+
+
+# UVBT texels are stored tile by tile (_uvParseUVBT): for each band of
+# tile_h rows, each tile_w-wide tile's rows are contiguous.
+def blit_tiles(b):
+    cols = -(-b["width"] // b["tile_w"])
+    rows = -(-b["height"] // b["tile_h"])
+    off = 0
+    for i in range(rows):
+        th = min(b["tile_h"], b["height"] - i * b["tile_h"])
+        for j in range(cols):
+            yield i * b["tile_h"], j * b["tile_w"], th, off
+            off += th * b["tile_w"]
+
+
+def blit_detile(texels, b):
+    """texels: flat array (texel units, stride*height) -> (height, cols*tile_w) image."""
+    import numpy as np
+    cols = -(-b["width"] // b["tile_w"])
+    img = np.zeros((b["height"], cols * b["tile_w"]) + texels.shape[1:], texels.dtype)
+    for y, x, th, off in blit_tiles(b):
+        img[y:y + th, x:x + b["tile_w"]] = texels[off:off + th * b["tile_w"]].reshape((th, b["tile_w"]) + texels.shape[1:])
+    return img
+
+
+def blit_retile(img, b):
+    import numpy as np
+    n = b["stride"] * b["height"]
+    out = np.zeros((n,) + img.shape[2:], img.dtype)
+    for y, x, th, off in blit_tiles(b):
+        blk = img[y:y + th, x:x + b["tile_w"]]
+        out[off:off + th * b["tile_w"]] = blk.reshape((th * b["tile_w"],) + img.shape[2:])
+    return out
+
+
+def blit_swizzle(data: bytes, b) -> bytes:
+    """Odd rows of each tile are stored TMEM-swizzled (32-bit halves of each
+    64-bit word swapped), like UVTX. Self-inverse."""
+    from ..texlayout import swizzle
+    bpp = b["depth"] / 8
+    row = int(b["tile_w"] * bpp)
+    out = bytearray(data)
+    for y, x, th, off in blit_tiles(b):
+        o0, o1 = int(off * bpp), int((off + th * b["tile_w"]) * bpp)
+        out[o0:o1] = swizzle(bytes(out[o0:o1]), row)
+    return bytes(out)

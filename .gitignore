@@ -6,3 +6,4 @@ __pycache__/
 *.n64
 *.v64
 .pytest_cache/
+/work/

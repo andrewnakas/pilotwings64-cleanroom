@@ -92,7 +92,7 @@ def texture_digest(ir):
     for t, start, end, stride, tw, rows in texlayout.regions(ir, len(img)):
         if t["fmt"] not in (texfmt.RGBA, texfmt.IA, texfmt.I):
             continue
-        data = img[start:end].ljust(stride * rows, bytes(1))
+        data = texlayout.swizzle(img[start:end].ljust(stride * rows, bytes(1)), stride)
         rgba = texfmt.decode(data, tw, rows, t["fmt"], t["siz"])
         vis = rgba[:max(1, min(rows, t["height"])), :max(1, min(tw, t["width"]))]
         d = {"start": start, "w": tw, "h": rows, "vw": vis.shape[1], "vh": vis.shape[0],
@@ -155,7 +155,9 @@ def clean_uvbt(ir):
     fmt = ir["fmt"] if ir["fmt"] in (texfmt.RGBA, texfmt.IA, texfmt.I) else None
     siz = {4: texfmt.B4, 8: texfmt.B8, 16: texfmt.B16, 32: texfmt.B32}.get(ir["depth"])
     if fmt is not None and siz is not None:
-        rgba = texfmt.decode(bytes.fromhex(ir["pixels"]), ir["stride"], ir["height"], fmt, siz)
+        px = misc.blit_swizzle(bytes.fromhex(ir["pixels"]), ir)
+        flat = texfmt.decode(px, ir["stride"] * ir["height"], 1, fmt, siz)[0]
+        rgba = misc.blit_detile(flat, ir)      # blits are stored tile by tile
         vis = rgba[:, :ir["width"]]
         out["grid8"] = _grid(vis, 8)
         if texlayout.has_alpha(fmt) and (rgba[..., 3] < 250).any():

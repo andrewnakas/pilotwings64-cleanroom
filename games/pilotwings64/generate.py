@@ -26,6 +26,7 @@ import numpy as np
 
 from cleanroom import iff
 from cleanroom.gfx import texfmt, gbi, strokefont
+from . import texlayout
 from cleanroom.binio import build_vtx
 from . import profile as P
 from .formats import engine, misc
@@ -264,6 +265,78 @@ def _from_digest(tid, d, tw, rows):
     return np.clip(rgba, 0, 255).astype(np.uint8)
 
 
+_TEX_LABELS = None
+
+
+def tex_labels():
+    global _TEX_LABELS
+    if _TEX_LABELS is None:
+        with open(os.path.join(HERE, "tex_labels.json")) as f:
+            _TEX_LABELS = {int(k, 0): v for k, v in json.load(f).items() if not k.startswith("_")}
+    return _TEX_LABELS
+
+
+def _label_texture(label, d, tw, rows):
+    vw, vh = d["vw"], d["vh"]
+    vis = render_label(label, vw, vh, d["grid"], int(round(len(d["grid"]) ** 0.5)))
+    if label.get("flip"):
+        vis = vis[::-1]
+    rgba = np.zeros((rows, tw, 4), np.float32)
+    rgba[:vh, :vw] = vis
+    return np.clip(rgba, 0, 255).astype(np.uint8)
+
+
+OVERRIDES = os.path.join(HERE, "overrides", "textures")
+
+
+def _resize(img, w, h):
+    """Area-average (down) / bilinear (up) resize of an (H, W, C) image."""
+    img = img.astype(np.float32)
+    H, W = img.shape[:2]
+    if H >= h and W >= w:
+        ys = (np.arange(h + 1) * H / h).astype(int)
+        xs = (np.arange(w + 1) * W / w).astype(int)
+        c = np.cumsum(np.cumsum(np.pad(img, ((1, 0), (1, 0), (0, 0))), 0), 1)
+        tot = c[ys[1:]][:, xs[1:]] - c[ys[:-1]][:, xs[1:]] - c[ys[1:]][:, xs[:-1]] + c[ys[:-1]][:, xs[:-1]]
+        area = np.outer(ys[1:] - ys[:-1], xs[1:] - xs[:-1])[..., None]
+        return tot / np.maximum(area, 1)
+    gy = np.clip((np.arange(h) + 0.5) * H / h - 0.5, 0, H - 1)
+    gx = np.clip((np.arange(w) + 0.5) * W / w - 0.5, 0, W - 1)
+    y0, x0 = gy.astype(int), gx.astype(int)
+    y1, x1 = np.minimum(y0 + 1, H - 1), np.minimum(x0 + 1, W - 1)
+    fy, fx = (gy - y0)[:, None, None], (gx - x0)[None, :, None]
+    return (img[y0][:, x0] * (1 - fx) + img[y0][:, x1] * fx) * (1 - fy) +            (img[y1][:, x0] * (1 - fx) + img[y1][:, x1] * fx) * fy
+
+
+def _override_image_path(path):
+    if os.path.exists(path):
+        from cleanroom.gfx import png
+        return png.read(path)
+    return None
+
+
+def _override_image(tid, k):
+    """overrides/textures/<id>_<k>.png for region k, else <id>.png (hex id)."""
+    for name in (f"{tid:03x}_{k}.png", f"{tid:03x}.png"):
+        path = os.path.join(OVERRIDES, name)
+        if os.path.exists(path):
+            from cleanroom.gfx import png
+            return png.read(path)
+    return None
+
+
+def _override_region(src, d, tw, rows):
+    """Fit an authored image to a slot region: resize to the visible size,
+    keep the slot's alpha outline when the image has none, and wrap over the
+    stride padding."""
+    vw, vh = d["vw"], d["vh"]
+    vis = _resize(src, vw, vh)
+    if "alpha2" in d and (src[..., 3] == 255).all():
+        vis[..., 3] = _unpack_alpha2(d["alpha2"], tw, rows)[:vh, :vw]
+    ry, rx = np.arange(rows) % vh, np.arange(tw) % vw
+    return np.clip(vis[ry][:, rx], 0, 255).astype(np.uint8)
+
+
 def gen_uvtx(tid, ir, usage: Usage):
     if ir.get("digest") is not None:
         return _gen_uvtx_digest(tid, ir, usage)
@@ -275,12 +348,24 @@ def _gen_uvtx_digest(tid, ir, usage):
     size = ir["image_size"]
     img = bytearray(size)
     digests = {d["start"]: d for d in ir["digest"]}
+    done = []
     for t, start, end, stride, tw, rows in regions(ir, size):
         d = digests.get(start)
         if d is None:
             continue
-        rgba = _from_digest(tid, d, tw, rows)
-        data = texfmt.encode(rgba, t["fmt"], t["siz"])
+        label = tex_labels().get(tid)
+        src = _override_image(tid, len(done))
+        done.append(start)
+        if src is not None and t["siz"] <= texfmt.B16:
+            rgba = _override_region(src, d, tw, rows)
+            data = texfmt.encode(rgba, t["fmt"], t["siz"])
+        elif label and t["siz"] <= texfmt.B16 and start == ir["digest"][0]["start"]:
+            rgba = _label_texture(label, d, tw, rows)
+            data = texfmt.encode(rgba, t["fmt"], t["siz"])
+        else:
+            rgba = _from_digest(tid, d, tw, rows)
+            data = texfmt.encode(rgba, t["fmt"], t["siz"])
+        data = texlayout.swizzle(data, stride)
         n = min(len(data), end - start)
         img[start:start + n] = data[:n]
     out = {k: v for k, v in ir.items() if k not in ("image_size", "tiles", "timg", "digest")}
@@ -507,17 +592,195 @@ def gen_uvan_part(ir, model_ir):
 SIZ_OF_DEPTH = {4: texfmt.B4, 8: texfmt.B8, 16: texfmt.B16, 32: texfmt.B32}
 
 
+_HUD_LABELS = None
+
+
+def hud_labels():
+    global _HUD_LABELS
+    if _HUD_LABELS is None:
+        with open(os.path.join(HERE, "hud_labels.json")) as f:
+            _HUD_LABELS = {int(k): v for k, v in json.load(f).items() if not k.startswith("_")}
+    return _HUD_LABELS
+
+
+def _grid_colours(grid, n):
+    """Top and bottom ink colours of a coarse grid: per row, the brighter
+    half of the opaque cells (text is lighter than its shadow)."""
+    g = np.asarray(grid, np.float32).reshape(n, n, 4)
+    rows = []
+    for r in range(n):
+        m = g[r][:, 3] > 64
+        if m.any():
+            c = g[r][m][:, :3]
+            lum = c @ np.array([0.3, 0.59, 0.11], np.float32)
+            rows.append(c[lum >= np.median(lum)].mean(0))
+    if not rows:
+        return np.array([240, 240, 240], np.float32), np.array([200, 200, 200], np.float32)
+    rows = np.array(rows)
+    # Keep light text light: lift dark averages towards white.
+    def lift(c):
+        l = float(c @ np.array([0.3, 0.59, 0.11]))
+        return c + (255 - c) * max(0.0, (150 - l) / 150) if l < 150 else c
+    return lift(rows[0]), lift(rows[-1])
+
+
+def _fit_line(text, max_w, max_h, bold):
+    """Largest proportional rendering of text within max_w x max_h."""
+    h = max(5, int(max_h))
+    while True:
+        th = max(0.6, h * (0.11 if bold else 0.075))
+        for aspect in (0.9, 0.75, 0.6):
+            m = strokefont.render_line(text, h, aspect=aspect, thickness=th)
+            if m.shape[1] <= max_w or h <= 5 and aspect == 0.6:
+                return m[:, :max_w]
+        h -= 1
+
+
+def _dilate(m, r=1):
+    out = m.copy()
+    for dy in range(-r, r + 1):
+        for dx in range(-r, r + 1):
+            out = np.maximum(out, np.roll(np.roll(m, dy, 0), dx, 1))
+    return out
+
+
+def render_label(label, w, h, grid, n=8):
+    """RGBA (h, w) drawing of a UI label with our stroke font.
+
+    Styles: banner (large centred gradient), button (bevelled grey),
+    small/legend (left aligned), hud (bold caps with a dark outline)."""
+    style = label["style"]
+    lines = label["text"].split("\n")
+    rgba = np.zeros((h, w, 4), np.float32)
+    top, bottom = _grid_colours(grid, n)
+    if "colour" in label:
+        top = bottom = np.array(label["colour"], np.float32)
+    if "colour_top" in label:
+        top = np.array(label["colour_top"], np.float32)
+        bottom = np.array(label["colour_bottom"], np.float32)
+    ink = None
+    if "background" in label:
+        rgba[..., :3] = label["background"]
+        rgba[..., 3] = 255
+    if style == "button":
+        yy = np.linspace(0, 1, h)[:, None]
+        rgba[..., :3] = (175 - 30 * yy)[..., None]
+        rgba[..., 3] = 255
+        rgba[0, :, :3] = 230; rgba[:, 0, :3] = 230
+        rgba[-1, :, :3] = 90; rgba[:, -1, :3] = 90
+        ink = np.array([30, 30, 30], np.float32)
+    outline = style in ("hud", "banner")
+    pad = 1 if outline else 0
+    k = len(lines)
+    lh = (h - 2 * pad) / k
+    bold = style in ("banner", "hud", "sign")
+    avail = w - 2 * pad - (2 if style == "button" else 0)
+    fitted = [_fit_line(line, avail, lh, bold) for line in lines]
+    common = min(m.shape[0] for m in fitted)
+    if len(lines) > 1:
+        fitted = [_fit_line(line, avail, common, bold) for line in lines]
+    for li, line in enumerate(lines):
+        m = fitted[li]
+        mh, mw = m.shape
+        centred = style in ("banner", "button", "hud", "sign") and label.get("align") != "left"
+        x0 = (w - mw) // 2 if centred else pad
+        y0 = int(pad + li * lh + (lh - mh) / 2)
+        canvas = np.zeros((h, w), np.float32)
+        ys, ye = max(0, y0), min(h, y0 + mh)
+        x0 = max(0, x0)
+        mw = min(mw, w - x0)
+        canvas[ys:ye, x0:x0 + mw] = m[ys - y0:ye - y0, :mw]
+        if ink is not None:
+            col = np.broadcast_to(ink, (h, w, 3))
+        else:
+            t = np.clip((np.arange(h, dtype=np.float32) - y0) / max(1, mh - 1), 0, 1)[:, None, None]
+            col = top * (1 - t) + bottom * t
+        if outline:
+            o = _dilate(canvas, 1)
+            rgba[..., :3] = rgba[..., :3] * (1 - o[..., None]) + 12 * o[..., None]
+            rgba[..., 3] = np.maximum(rgba[..., 3], o * 255)
+        a = canvas[..., None]
+        rgba[..., :3] = rgba[..., :3] * (1 - a) + col * a
+        if ink is None:
+            rgba[..., 3] = np.maximum(rgba[..., 3], canvas * 255)
+    return rgba
+
+
+PANEL_EDGE = np.array([14, 22, 70], np.float32)
+PANEL_LINE = np.array([46, 96, 236], np.float32)
+
+
+def render_panel(canvas, label):
+    """Draw a grid panel over its coarse base: crisp cell frames, flat
+    cells in the base colour at each cell's centre, and our text."""
+    h, w = canvas.shape[:2]
+    base = canvas.copy()
+    for c in label["cells"]:
+        x, y, cw, ch = c["rect"]
+        x0, y0, x1, y1 = max(0, x - 4), max(0, y - 4), min(w, x + cw + 4), min(h, y + ch + 4)
+        canvas[y0:y1, x0:x1, :3] = PANEL_LINE
+        canvas[y0:y1, x0:x1, 3] = 255
+        for (a, b) in ((y0, x0), (y1 - 1, x1 - 1)):
+            canvas[a, x0:x1, :3] = PANEL_EDGE
+            canvas[y0:y1, b, :3] = PANEL_EDGE
+        canvas[y - 1:y + ch + 1, x - 1:x + cw + 1, :3] = PANEL_EDGE
+        cell = canvas[y:y + ch, x:x + cw]
+        kind = c.get("kind", "plain")
+        if kind == "icon":
+            cell[:] = base[y:y + ch, x:x + cw]
+            cell[..., 3] = 255
+        else:
+            col = base[y + ch // 2, x + cw // 2, :3]
+            shade = np.linspace(1.12, 0.88, ch, dtype=np.float32)[:, None, None]
+            cell[..., :3] = np.clip(col * shade, 0, 255)
+            cell[..., 3] = 255
+        text = c.get("text")
+        if text:
+            if kind == "icon":
+                bh = max(7, ch // 4)
+                sub = render_label({"text": text, "style": "hud", "colour": [255, 255, 255]}, cw, bh, [[0, 0, 0, 0]] * 64)
+                oy = ch - bh
+            else:
+                # one text size per panel: a line is at most ~40% of a row
+                n = text.count("\n") + 1
+                bh = min(ch, int(n * max(9, ch * 0.4)) + 2)
+                sub = render_label({"text": text, "style": "hud", "colour": [255, 255, 255]}, cw, bh, [[0, 0, 0, 0]] * 64)
+                oy = (ch - bh) // 2
+            a = sub[..., 3:4] / 255.0
+            reg = cell[oy:oy + sub.shape[0]]
+            reg[..., :3] = reg[..., :3] * (1 - a) + sub[..., :3] * a
+    return canvas
+
+
 def gen_uvbt(bid, ir):
     if "grid8" in ir:
         w, h, stride = ir["width"], ir["height"], ir["stride"]
-        vis = _upsample_grid(ir["grid8"], 8, w, h)
-        vis[..., :3] *= _detail(_h("blit", bid), w, h, 0.04)[..., None]
-        rgba = np.zeros((h, stride, 4), np.float32)
-        rgba[:, :w] = vis
-        if "alpha2" in ir:
-            rgba[..., 3] = _unpack_alpha2(ir["alpha2"], stride, h)
+        canvas_w = -(-w // ir["tile_w"]) * ir["tile_w"]
+        label = hud_labels().get(bid)
+        src = _override_image_path(os.path.join(HERE, "overrides", "blits", f"{bid}.png"))
+        if src is not None:
+            vis = _resize(src, w, h)
+            if "alpha2" in ir and (src[..., 3] == 255).all():
+                vis[..., 3] = _unpack_alpha2(ir["alpha2"], canvas_w, h)[:, :w]
+            canvas = np.zeros((h, canvas_w, 4), np.float32)
+            canvas[:, :w] = vis
+        elif label and label["style"] != "panel":
+            vis = render_label(label, w, h, ir["grid8"])
+            canvas = np.zeros((h, canvas_w, 4), np.float32)
+            canvas[:, :w] = vis
+        else:
+            vis = _upsample_grid(ir["grid8"], 8, w, h)
+            vis[..., :3] *= _detail(_h("blit", bid), w, h, 0.04)[..., None]
+            canvas = np.zeros((h, canvas_w, 4), np.float32)
+            canvas[:, :w] = vis
+            if "alpha2" in ir:
+                canvas[..., 3] = _unpack_alpha2(ir["alpha2"], canvas_w, h)
+            if label:
+                render_panel(canvas, label)
+        flat = misc.blit_retile(np.clip(canvas, 0, 255).astype(np.uint8), ir)   # tile order
         fmt = ir["fmt"] if ir["fmt"] in (texfmt.RGBA, texfmt.IA, texfmt.I) else texfmt.RGBA
-        data = texfmt.encode(np.clip(rgba, 0, 255).astype(np.uint8), fmt, SIZ_OF_DEPTH[ir["depth"]])
+        data = texfmt.encode(flat[None], fmt, SIZ_OF_DEPTH[ir["depth"]])
+        data = misc.blit_swizzle(data, ir)
         need = stride * h * ir["depth"] // 8
         out = {k: v for k, v in ir.items() if k not in ("grid8", "alpha2")}
         out["pixels"] = data[:need].ljust(need, bytes(1)).hex()
@@ -573,7 +836,18 @@ def gen_uvft(chunks):
             continue
         img = images[b["imag"]]
         cw, chh = b["width"], b["height"]
-        mask = strokefont.render(ch, cw, chh)
+        if ch.islower() and not any(chr(c).islower() for c in strg if chr(c) not in "km"):
+            # unit symbols in the HUD number fonts: a wide 'k' cell holds
+            # the speed unit, 'm' is metres
+            if ch == "k" and cw > chh * 1.2:
+                line = strokefont.render_line("km/h", chh, aspect=0.7)
+                mask = np.zeros((chh, cw), np.float32)
+                n = min(cw, line.shape[1])
+                mask[:, :n] = line[:, :n]
+            else:
+                mask = strokefont.render(ch.upper(), cw, chh)
+        else:
+            mask = strokefont.render(ch, cw, chh)
         y0, x0 = b["t"], b["s"]
         y1, x1 = min(img.shape[0], y0 + chh), min(img.shape[1], x0 + cw)
         if y1 > y0 and x1 > x0:

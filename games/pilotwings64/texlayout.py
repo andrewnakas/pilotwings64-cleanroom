@@ -59,3 +59,16 @@ def regions(ir, size):
 
 def has_alpha(fmt):
     return fmt in (texfmt.RGBA, texfmt.IA)
+
+
+def swizzle(data, stride):
+    """TMEM odd-row word order. Every PW64 texture is loaded with LoadBlock
+    and dxt=0, so odd rows are stored with the 32-bit halves of each 64-bit
+    word swapped. Self-inverse: the same call swizzles and unswizzles."""
+    b = bytearray(data)
+    if stride < 8:
+        return bytes(b)
+    for r in range(1, len(b) // stride, 2):
+        for o in range(r * stride, r * stride + stride - 7, 8):
+            b[o:o + 8] = b[o + 4:o + 8] + b[o:o + 4]
+    return bytes(b)

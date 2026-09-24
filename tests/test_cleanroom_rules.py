@@ -38,7 +38,8 @@ def test_spec_contains_no_expressive_fields():
         for c in d["chunks"]:
             ir = c.get("ir") or {}
             assert "image" not in ir and "pixels" not in ir, name
-            if d["type"] in ("UVMD", "UVCT", "UVAN", "UVEN"):
+            kept = {"UVMD": "COMM", "UVCT": "COMM", "UVEN": "COMM", "UVAN": "PART"}
+            if c["tag"] == kept.get(d["type"]):
                 # Geometry + coarse colour scope: kept, and declared as facts.
                 assert c["prov"] == "fact", name
             if d["type"] == "UVTX" and c["tag"] == "COMM":
@@ -54,5 +55,13 @@ def test_spec_contains_no_expressive_fields():
 def test_audio_spec_has_no_samples_or_notes():
     with open(os.path.join(ROOT, "games/pilotwings64/spec/audio.json")) as f:
         a = json.load(f)
+    # Scope "SFX envelopes + melodies": note events are kept, sample data is
+    # not (no codebooks, no ADPCM state, no raw waves -- only descriptors).
     text = json.dumps(a)
-    assert '"book"' not in text and '"state"' not in text and '"note"' not in text
+    assert '"book"' not in text and '"state"' not in text and '"samples"' not in text
+    for bank in ("music", "sfx"):
+        for inst in a[bank]["insts"] + [a[bank]["percussion"]]:
+            for snd in (inst or {}).get("sounds", []):
+                assert set(snd["desc"]) == {"frames"}
+                for fr in snd["desc"]["frames"]:
+                    assert set(fr) <= {"f0", "h", "db", "rms"} and len(fr.get("db", [])) <= 16

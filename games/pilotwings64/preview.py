@@ -12,7 +12,7 @@ import numpy as np
 
 from cleanroom import iff
 from cleanroom.gfx import texfmt
-from . import profile as P
+from . import profile as P, texlayout
 from .formats import engine
 from .generate import _tex_tiles, _simulate
 
@@ -30,9 +30,10 @@ def write_png(path, rgba):
         f.write(png)
 
 
-def load(image):
+def load(image, seg=None):
     out = {}
-    for e, raw in P.read_files(image):
+    args = (seg["filetable"], seg["filesys"]) if seg else ()
+    for e, raw in P.read_files(image, *args):
         out.setdefault(e.tag, {})[e.kind_index] = iff.parse_form(raw)
     return out
 
@@ -56,7 +57,8 @@ def texture_sheet(files, cell=64, cols=24):
         h = min(t["height"], len(img) // max(1, stride))
         if t["fmt"] == texfmt.CI or h <= 0:
             continue
-        px = texfmt.decode(img[t["tmem"] * 8:], w, h, t["fmt"], t["siz"])[:, :t["width"]]
+        data = texlayout.swizzle(img[t["tmem"] * 8:t["tmem"] * 8 + stride * h], stride)
+        px = texfmt.decode(data, w, h, t["fmt"], t["siz"])[:, :t["width"]]
         avg[tid] = px[..., :3].reshape(-1, 3).mean(0)
         ys = (np.arange(cell) * px.shape[0] // cell)
         xs = (np.arange(cell) * px.shape[1] // cell)
@@ -122,7 +124,12 @@ def main(argv):
     image = open(argv[1], "rb").read()
     out = argv[2]
     os.makedirs(out, exist_ok=True)
-    files = load(image)
+    seg = None
+    elf = os.path.splitext(argv[1])[0] + ".elf"
+    if os.path.exists(elf):          # clean images use the reserved layout
+        from .taint_report import segments_from_elf
+        seg = segments_from_elf(elf)
+    files = load(image, seg)
     sheet, avg = texture_sheet(files)
     write_png(os.path.join(out, "textures.png"), sheet)
     n = sum(1 for c in files["UVTR"][0].chunks if c.tag == "COMM")

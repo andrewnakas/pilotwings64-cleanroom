@@ -4,6 +4,7 @@
     python -m cleanroom build <game> [--out F] [--code BIN | --code-from-retail ROM]
     python -m cleanroom taint <game> <retail rom> <clean image>
     python -m cleanroom preview <game> <image> [out_dir]
+    python -m cleanroom briefs <game> [out_dir]           # authoring briefs for overrides
 """
 import importlib
 import sys
@@ -23,6 +24,8 @@ def main(argv):
         importlib.import_module(pkg + ".taint_report").main([None] + rest)
     elif cmd == "preview":
         importlib.import_module(pkg + ".preview").main([None] + (rest if len(rest) > 1 else rest + ["build/preview"]))
+    elif cmd == "briefs":
+        importlib.import_module(pkg + ".briefs").main([None] + rest)
     else:
         print(__doc__)
         return 1

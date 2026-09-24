@@ -1,0 +1,209 @@
+{
+ "_comment": "Words shown by UVTX textures (a functional fact: what the texture says, plus whether it is stored upside down). Drawn with cleanroom.gfx.strokefont; colours are our own. Keys are texture ids.",
+ "0x11e": {
+  "text": "TIME",
+  "style": "hud",
+  "align": "left",
+  "colour_top": [
+   255,
+   190,
+   30
+  ],
+  "colour_bottom": [
+   255,
+   255,
+   230
+  ]
+ },
+ "0x11f": {
+  "text": "SEA LEVEL",
+  "style": "hud",
+  "align": "left",
+  "colour_top": [
+   255,
+   190,
+   30
+  ],
+  "colour_bottom": [
+   255,
+   255,
+   230
+  ]
+ },
+ "0x120": {
+  "text": "PHOTO",
+  "style": "hud",
+  "align": "left",
+  "colour_top": [
+   255,
+   190,
+   30
+  ],
+  "colour_bottom": [
+   255,
+   255,
+   230
+  ]
+ },
+ "0x121": {
+  "text": "SPEED",
+  "style": "hud",
+  "align": "left",
+  "colour_top": [
+   255,
+   190,
+   30
+  ],
+  "colour_bottom": [
+   255,
+   255,
+   230
+  ]
+ },
+ "0x129": {
+  "text": "FUEL",
+  "style": "hud",
+  "align": "left",
+  "colour_top": [
+   255,
+   190,
+   30
+  ],
+  "colour_bottom": [
+   255,
+   255,
+   230
+  ]
+ },
+ "0x136": {
+  "text": "N",
+  "style": "hud",
+  "flip": true,
+  "colour": [
+   255,
+   255,
+   255
+  ]
+ },
+ "0x13e": {
+  "text": "Return",
+  "style": "hud",
+  "align": "left",
+  "flip": true,
+  "colour": [
+   255,
+   255,
+   255
+  ]
+ },
+ "0x13f": {
+  "text": "Erase this photo",
+  "style": "hud",
+  "align": "left",
+  "flip": true,
+  "colour": [
+   255,
+   255,
+   255
+  ]
+ },
+ "0x140": {
+  "text": "Save this photo?",
+  "style": "hud",
+  "align": "left",
+  "flip": true,
+  "colour": [
+   40,
+   255,
+   40
+  ]
+ },
+ "0x142": {
+  "text": "Yes",
+  "style": "hud",
+  "align": "left",
+  "flip": true,
+  "colour": [
+   255,
+   255,
+   255
+  ]
+ },
+ "0x143": {
+  "text": "No",
+  "style": "hud",
+  "align": "left",
+  "flip": true,
+  "colour": [
+   255,
+   255,
+   255
+  ]
+ },
+ "0x145": {
+  "text": "Photos left :",
+  "style": "hud",
+  "align": "left",
+  "flip": true,
+  "colour": [
+   255,
+   255,
+   255
+  ]
+ },
+ "0xb5": {
+  "text": "HOLLYWOOD",
+  "style": "sign",
+  "flip": true,
+  "colour": [
+   250,
+   250,
+   250
+  ],
+  "background": [
+   20,
+   40,
+   70
+  ]
+ },
+ "0x131": {
+  "text": "E",
+  "style": "hud",
+  "flip": true,
+  "colour": [
+   255,
+   255,
+   255
+  ]
+ },
+ "0x132": {
+  "text": "N",
+  "style": "hud",
+  "flip": true,
+  "colour": [
+   255,
+   255,
+   255
+  ]
+ },
+ "0x133": {
+  "text": "S",
+  "style": "hud",
+  "flip": true,
+  "colour": [
+   255,
+   255,
+   255
+  ]
+ },
+ "0x134": {
+  "text": "W",
+  "style": "hud",
+  "flip": true,
+  "colour": [
+   255,
+   255,
+   255
+  ]
+ }
+}

@@ -56,3 +56,24 @@ def test_texfmt_roundtrip():
     for fmt, siz, tol in ((texfmt.RGBA, texfmt.B32, 0), (texfmt.RGBA, texfmt.B16, 8)):
         back = texfmt.decode(texfmt.encode(px, fmt, siz), 8, 8, fmt, siz)
         assert np.abs(back[..., :3].astype(int) - px[..., :3].astype(int)).max() <= tol
+
+
+def test_png_roundtrip_and_override_fit(tmp_path):
+    import numpy as np
+    from cleanroom.gfx import png
+    from games.pilotwings64 import generate as G
+    from games.pilotwings64.texlayout import swizzle
+    rng = np.random.default_rng(1)
+    img = rng.integers(0, 256, (37, 53, 4), dtype=np.uint8)
+    img[..., 3] = 255
+    path = str(tmp_path / "t.png")
+    png.write(path, img)
+    assert (png.read(path) == img).all()
+    # An opaque override keeps the slot's alpha outline and fills the stride.
+    d = {"vw": 16, "vh": 8, "alpha2": "ff" * 32 + "00" * 32}
+    out = G._override_region(img, d, 32, 8)
+    assert out.shape == (8, 32, 4)
+    assert (out[:4, :16, 3] == 255).all() and (out[4:, :16, 3] == 0).all()
+    # TMEM swizzle is self-inverse and leaves even rows alone.
+    buf = bytes(range(64))
+    assert swizzle(swizzle(buf, 16), 16) == buf and swizzle(buf, 16)[:16] == buf[:16]

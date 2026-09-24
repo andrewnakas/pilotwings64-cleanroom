@@ -34,6 +34,6 @@ def test_crc_matches_retail_header(retail_rom):
     assert cic6102_crc(retail_rom) == struct.unpack_from(">II", retail_rom, 0x10)
 
 
-def test_no_contamination(retail_rom, clean_image):
+def test_no_contamination(retail_rom, clean_image, clean_segments):
     from games.pilotwings64.taint_report import report
-    assert report(retail_rom, clean_image, out=lambda *_: None) == []
+    assert report(retail_rom, clean_image, out=lambda *_: None, clean_segments=clean_segments) == []

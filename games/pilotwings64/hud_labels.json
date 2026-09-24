@@ -1,0 +1,973 @@
+{
+ "_comment": "Text shown by UVBT blits (a functional fact: what the label says). Drawn with cleanroom.gfx.strokefont; colours come from each slot's coarse grid. Styles: banner = large centred gradient text, button = bevelled grey button, small = left-aligned hint text, legend = small coloured text. Panel: cell rects (x, y, w, h) measured from the grid lines; kind text = our text on the cell colour, icon = coarse picture with optional caption, plain = flat cell.",
+ "10": {
+  "text": "TM",
+  "style": "small"
+ },
+ "12": {
+  "text": "R",
+  "style": "small"
+ },
+ "13": {
+  "text": "Nintendo",
+  "style": "small"
+ },
+ "14": {
+  "text": "Start",
+  "style": "button"
+ },
+ "15": {
+  "text": "Scoring",
+  "style": "button"
+ },
+ "16": {
+  "text": "View map",
+  "style": "button"
+ },
+ "17": {
+  "text": "Control",
+  "style": "button"
+ },
+ "18": {
+  "text": "Hint",
+  "style": "button"
+ },
+ "19": {
+  "text": "Complete data",
+  "style": "button"
+ },
+ "20": {
+  "text": "Return",
+  "style": "button"
+ },
+ "21": {
+  "text": "TEST",
+  "style": "small"
+ },
+ "28": {
+  "text": "(C) 1996 Nintendo",
+  "style": "small"
+ },
+ "29": {
+  "text": "PARADIGM\nSIMULATION INC.",
+  "style": "banner"
+ },
+ "30": {
+  "text": "(C) 1996 Nintendo, PARADIGM SIMULATION INC.",
+  "style": "small"
+ },
+ "31": {
+  "text": "Class A",
+  "style": "banner"
+ },
+ "32": {
+  "text": "Class B",
+  "style": "banner"
+ },
+ "33": {
+  "text": "Beginner Class",
+  "style": "banner"
+ },
+ "34": {
+  "text": "Pilot Class",
+  "style": "banner"
+ },
+ "35": {
+  "text": "Level 1",
+  "style": "banner"
+ },
+ "36": {
+  "text": "Level 2",
+  "style": "banner"
+ },
+ "37": {
+  "text": "Level 3",
+  "style": "banner"
+ },
+ "38": {
+  "text": "GYROCOPTER",
+  "style": "banner"
+ },
+ "39": {
+  "text": "HANG GLIDER",
+  "style": "banner"
+ },
+ "40": {
+  "text": "ROCKET BELT",
+  "style": "banner"
+ },
+ "41": {
+  "text": "BIRDMAN",
+  "style": "banner"
+ },
+ "42": {
+  "text": "CANNONBALL",
+  "style": "banner"
+ },
+ "43": {
+  "text": "SKY DIVING",
+  "style": "banner"
+ },
+ "44": {
+  "text": "JUMBLE HOPPER",
+  "style": "banner"
+ },
+ "45": {
+  "text": "Free Flight",
+  "style": "banner"
+ },
+ "46": {
+  "text": "Current position",
+  "style": "legend"
+ },
+ "47": {
+  "text": "Landing point",
+  "style": "legend"
+ },
+ "48": {
+  "text": "Runway",
+  "style": "legend"
+ },
+ "49": {
+  "text": "Target",
+  "style": "legend"
+ },
+ "50": {
+  "text": "Ferris Wheel",
+  "style": "legend"
+ },
+ "51": {
+  "text": "Boat",
+  "style": "legend"
+ },
+ "52": {
+  "text": "Whale",
+  "style": "legend"
+ },
+ "53": {
+  "text": "Space Shuttle",
+  "style": "legend"
+ },
+ "54": {
+  "text": "Passenger Boat",
+  "style": "legend"
+ },
+ "55": {
+  "text": "Fountain",
+  "style": "legend"
+ },
+ "56": {
+  "text": "Plane",
+  "style": "legend"
+ },
+ "57": {
+  "text": "Mecha the Monster",
+  "style": "legend"
+ },
+ "60": {
+  "text": "New item",
+  "style": "button"
+ },
+ "68": {
+  "text": "You earned\na Bronze Badge !!",
+  "style": "banner"
+ },
+ "69": {
+  "text": "You earned\na Silver Badge !!",
+  "style": "banner"
+ },
+ "70": {
+  "text": "You earned\na Gold Badge !!",
+  "style": "banner"
+ },
+ "71": {
+  "text": "You earned\na perfect score !!",
+  "style": "banner"
+ },
+ "72": {
+  "text": "Congratulations!",
+  "style": "banner"
+ },
+ "76": {
+  "text": "Best",
+  "style": "legend"
+ },
+ "77": {
+  "text": "Thrust (use\nthe throttle\ncontrols)",
+  "style": "small"
+ },
+ "78": {
+  "text": "(Z)",
+  "style": "small"
+ },
+ "79": {
+  "text": "Snapshot",
+  "style": "small"
+ },
+ "80": {
+  "text": "Control\n  the vehicle",
+  "style": "small"
+ },
+ "81": {
+  "text": "Decrease\n   throttle\n   setting",
+  "style": "small"
+ },
+ "82": {
+  "text": "Increase\n   throttle\n   setting",
+  "style": "small"
+ },
+ "83": {
+  "text": "Fire missile",
+  "style": "small"
+ },
+ "84": {
+  "text": "Weak jet",
+  "style": "small"
+ },
+ "85": {
+  "text": "Strong jet",
+  "style": "small"
+ },
+ "86": {
+  "text": "Air brake/\n  Hover",
+  "style": "small"
+ },
+ "87": {
+  "text": "Fire",
+  "style": "small"
+ },
+ "88": {
+  "text": "Adjust the angle\n& move cannon left/right",
+  "style": "small"
+ },
+ "89": {
+  "text": "Thrust (Use\nthe altitude)",
+  "style": "small"
+ },
+ "90": {
+  "text": "Open chute",
+  "style": "small"
+ },
+ "91": {
+  "text": "Tilt forward",
+  "style": "small"
+ },
+ "92": {
+  "text": "Tilt back",
+  "style": "small"
+ },
+ "93": {
+  "text": "Turn left/right",
+  "style": "small"
+ },
+ "97": {
+  "text": "Change\nthe altitude\nof jump",
+  "style": "small"
+ },
+ "98": {
+  "text": "Adjust left and right direction",
+  "style": "small"
+ },
+ "99": {
+  "text": "Adjust angle before jumping",
+  "style": "small"
+ },
+ "100": {
+  "text": "Flap\nthe wings",
+  "style": "small"
+ },
+ "101": {
+  "text": "Brake/\n  Hover",
+  "style": "small"
+ },
+ "7": {
+  "style": "panel",
+  "cells": [
+   {
+    "rect": [
+     52,
+     3,
+     44,
+     32
+    ],
+    "kind": "icon",
+    "text": "HANG GLIDER"
+   },
+   {
+    "rect": [
+     100,
+     3,
+     44,
+     32
+    ],
+    "kind": "icon",
+    "text": "ROCKET BELT"
+   },
+   {
+    "rect": [
+     148,
+     3,
+     44,
+     32
+    ],
+    "kind": "icon",
+    "text": "GYROCOPTER"
+   },
+   {
+    "rect": [
+     4,
+     37,
+     44,
+     32
+    ],
+    "kind": "text",
+    "text": "Beginner\nClass"
+   },
+   {
+    "rect": [
+     4,
+     71,
+     44,
+     32
+    ],
+    "kind": "text",
+    "text": "Class A"
+   },
+   {
+    "rect": [
+     4,
+     105,
+     44,
+     32
+    ],
+    "kind": "text",
+    "text": "Class B"
+   },
+   {
+    "rect": [
+     4,
+     139,
+     44,
+     32
+    ],
+    "kind": "text",
+    "text": "Pilot\nClass"
+   },
+   {
+    "rect": [
+     52,
+     37,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     100,
+     37,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     148,
+     37,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     52,
+     71,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     100,
+     71,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     148,
+     71,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     52,
+     105,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     100,
+     105,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     148,
+     105,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     52,
+     139,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     100,
+     139,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     148,
+     139,
+     44,
+     32
+    ],
+    "kind": "plain"
+   }
+  ]
+ },
+ "8": {
+  "style": "panel",
+  "cells": [
+   {
+    "rect": [
+     4,
+     3,
+     44,
+     32
+    ],
+    "kind": "text",
+    "text": "Extra\nGames"
+   },
+   {
+    "rect": [
+     52,
+     3,
+     44,
+     32
+    ],
+    "kind": "text",
+    "text": "Level 1"
+   },
+   {
+    "rect": [
+     100,
+     3,
+     44,
+     32
+    ],
+    "kind": "text",
+    "text": "Level 2"
+   },
+   {
+    "rect": [
+     148,
+     3,
+     44,
+     32
+    ],
+    "kind": "text",
+    "text": "Level 3"
+   },
+   {
+    "rect": [
+     4,
+     37,
+     44,
+     32
+    ],
+    "kind": "icon",
+    "text": "CANNONBALL"
+   },
+   {
+    "rect": [
+     4,
+     71,
+     44,
+     32
+    ],
+    "kind": "icon",
+    "text": "SKY DIVING"
+   },
+   {
+    "rect": [
+     4,
+     105,
+     44,
+     32
+    ],
+    "kind": "icon",
+    "text": "JUMBLE HOPPER"
+   },
+   {
+    "rect": [
+     52,
+     37,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     100,
+     37,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     148,
+     37,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     52,
+     71,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     100,
+     71,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     148,
+     71,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     52,
+     105,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     100,
+     105,
+     44,
+     32
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     148,
+     105,
+     44,
+     32
+    ],
+    "kind": "plain"
+   }
+  ]
+ },
+ "4": {
+  "style": "panel",
+  "cells": [
+   {
+    "rect": [
+     4,
+     3,
+     44,
+     26
+    ],
+    "kind": "icon",
+    "text": "BIRDMAN"
+   },
+   {
+    "rect": [
+     52,
+     3,
+     32,
+     26
+    ],
+    "kind": "text",
+    "text": "Holiday"
+   },
+   {
+    "rect": [
+     88,
+     3,
+     32,
+     26
+    ],
+    "kind": "text",
+    "text": "Ever\n-Frost"
+   },
+   {
+    "rect": [
+     124,
+     3,
+     32,
+     26
+    ],
+    "kind": "text",
+    "text": "Crescent"
+   },
+   {
+    "rect": [
+     160,
+     3,
+     32,
+     26
+    ],
+    "kind": "text",
+    "text": "Little\nStates"
+   }
+  ]
+ },
+ "5": {
+  "style": "panel",
+  "cells": [
+   {
+    "rect": [
+     4,
+     3,
+     44,
+     32
+    ],
+    "kind": "text",
+    "text": "Extra\nGames"
+   },
+   {
+    "rect": [
+     4,
+     37,
+     44,
+     32
+    ],
+    "kind": "icon",
+    "text": "CANNONBALL"
+   },
+   {
+    "rect": [
+     4,
+     71,
+     44,
+     32
+    ],
+    "kind": "icon",
+    "text": "SKY DIVING"
+   },
+   {
+    "rect": [
+     4,
+     105,
+     44,
+     32
+    ],
+    "kind": "icon",
+    "text": "JUMBLE HOPPER"
+   }
+  ]
+ },
+ "6": {
+  "style": "panel",
+  "cells": [
+   {
+    "rect": [
+     4,
+     3,
+     44,
+     26
+    ],
+    "kind": "icon",
+    "text": "BIRDMAN"
+   }
+  ]
+ },
+ "73": {
+  "style": "panel",
+  "cells": [
+   {
+    "rect": [
+     52,
+     3,
+     36,
+     22
+    ],
+    "kind": "icon"
+   },
+   {
+    "rect": [
+     92,
+     3,
+     36,
+     22
+    ],
+    "kind": "icon"
+   },
+   {
+    "rect": [
+     132,
+     3,
+     36,
+     22
+    ],
+    "kind": "icon"
+   },
+   {
+    "rect": [
+     4,
+     27,
+     44,
+     23
+    ],
+    "kind": "text",
+    "text": "BEGINNER"
+   },
+   {
+    "rect": [
+     4,
+     52,
+     44,
+     23
+    ],
+    "kind": "text",
+    "text": "A"
+   },
+   {
+    "rect": [
+     4,
+     77,
+     44,
+     23
+    ],
+    "kind": "text",
+    "text": "B"
+   },
+   {
+    "rect": [
+     4,
+     102,
+     44,
+     23
+    ],
+    "kind": "text",
+    "text": "P"
+   },
+   {
+    "rect": [
+     52,
+     27,
+     36,
+     23
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     92,
+     27,
+     36,
+     23
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     132,
+     27,
+     36,
+     23
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     52,
+     52,
+     36,
+     23
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     92,
+     52,
+     36,
+     23
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     132,
+     52,
+     36,
+     23
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     52,
+     77,
+     36,
+     23
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     92,
+     77,
+     36,
+     23
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     132,
+     77,
+     36,
+     23
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     52,
+     102,
+     36,
+     23
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     92,
+     102,
+     36,
+     23
+    ],
+    "kind": "plain"
+   },
+   {
+    "rect": [
+     132,
+     102,
+     36,
+     23
+    ],
+    "kind": "plain"
+   }
+  ]
+ },
+ "74": {
+  "style": "panel",
+  "cells": [
+   {
+    "rect": [
+     4,
+     3,
+     36,
+     22
+    ],
+    "kind": "text",
+    "text": "Extra\nGames"
+   },
+   {
+    "rect": [
+     4,
+     27,
+     36,
+     23
+    ],
+    "kind": "icon"
+   },
+   {
+    "rect": [
+     4,
+     52,
+     36,
+     23
+    ],
+    "kind": "icon"
+   },
+   {
+    "rect": [
+     4,
+     77,
+     36,
+     23
+    ],
+    "kind": "icon"
+   }
+  ]
+ },
+ "75": {
+  "style": "panel",
+  "cells": [
+   {
+    "rect": [
+     4,
+     3,
+     36,
+     18
+    ],
+    "kind": "icon"
+   }
+  ]
+ }
+}

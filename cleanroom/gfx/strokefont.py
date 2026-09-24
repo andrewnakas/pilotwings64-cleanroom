@@ -22,7 +22,7 @@ G = {
     "D": [[(0, 0), (0, 6), (3, 6), (4, 5), (4, 1), (3, 0), (0, 0)]],
     "E": [[(4, 0), (0, 0), (0, 6), (4, 6)], [(0, 3), (3, 3)]],
     "F": [[(4, 0), (0, 0), (0, 6)], [(0, 3), (3, 3)]],
-    "G": [[(4, 1), (3, 0), (1, 0), (0, 1), (0, 5), (1, 6), (4, 6), (4, 3), (2, 3)]],
+    "G": [[(4, 1.2), (3.2, 0), (1, 0), (0, 1), (0, 5), (1, 6), (3, 6), (4, 5), (4, 3.5), (2.5, 3.5)]],
     "H": [[(0, 0), (0, 6)], [(4, 0), (4, 6)], [(0, 3), (4, 3)]],
     "I": [[(1, 0), (3, 0)], [(2, 0), (2, 6)], [(1, 6), (3, 6)]],
     "J": [[(4, 0), (4, 5), (3, 6), (1, 6), (0, 5)]],
@@ -65,36 +65,75 @@ G = {
 }
 
 
-def _lower(c):
-    # Lower-case glyphs: the upper-case design compressed into the x-height.
-    up = G.get(c.upper())
-    if up is None:
-        return None
-    return [[(x, 2 + y * 4 / 6) for x, y in line] for line in up]
+# Lower case: x-height 2, baseline 6, ascenders from 0, descenders to 7.5.
+L = {
+    "a": [[(0.5, 2), (3, 2), (4, 3), (4, 6)], [(4, 3.8), (1, 3.8), (0, 4.6), (0, 5.3), (0.7, 6), (3, 6), (4, 5)]],
+    "b": [[(0, 0), (0, 6)], [(0, 3), (1, 2), (3, 2), (4, 3), (4, 5), (3, 6), (1, 6), (0, 5)]],
+    "c": [[(4, 2.6), (3.4, 2), (1, 2), (0, 3), (0, 5), (1, 6), (3.4, 6), (4, 5.4)]],
+    "d": [[(4, 0), (4, 6)], [(4, 3), (3, 2), (1, 2), (0, 3), (0, 5), (1, 6), (3, 6), (4, 5)]],
+    "e": [[(0, 4), (4, 4), (4, 3), (3, 2), (1, 2), (0, 3), (0, 5), (1, 6), (3.8, 6)]],
+    "f": [[(3.5, 0), (2.5, 0), (1.5, 1), (1.5, 6)], [(0, 2), (3, 2)]],
+    "g": [[(4, 2), (4, 6.8), (3.2, 7.5), (0.5, 7.5)], [(4, 3), (3, 2), (1, 2), (0, 3), (0, 4.6), (1, 5.6), (3, 5.6), (4, 4.6)]],
+    "h": [[(0, 0), (0, 6)], [(0, 3), (1, 2), (3, 2), (4, 3), (4, 6)]],
+    "i": [[(0, 2), (0, 6)], [(0, 0.3), (0, 0.3)]],
+    "j": [[(2, 2), (2, 6.8), (1.2, 7.5), (0, 7.5)], [(2, 0.3), (2, 0.3)]],
+    "k": [[(0, 0), (0, 6)], [(3.5, 2), (0, 4.2)], [(1.3, 3.4), (3.8, 6)]],
+    "l": [[(0, 0), (0, 5.2), (0.8, 6), (1.2, 6)]],
+    "m": [[(0, 6), (0, 2)], [(0, 3), (0.8, 2), (2, 2), (2.5, 2.7), (2.5, 6)], [(2.5, 2.7), (3, 2), (4.2, 2), (5, 3), (5, 6)]],
+    "n": [[(0, 6), (0, 2)], [(0, 3), (1, 2), (3, 2), (4, 3), (4, 6)]],
+    "o": [[(1, 2), (3, 2), (4, 3), (4, 5), (3, 6), (1, 6), (0, 5), (0, 3), (1, 2)]],
+    "p": [[(0, 2), (0, 7.5)], [(0, 3), (1, 2), (3, 2), (4, 3), (4, 5), (3, 6), (1, 6), (0, 5)]],
+    "q": [[(4, 2), (4, 7.5)], [(4, 3), (3, 2), (1, 2), (0, 3), (0, 5), (1, 6), (3, 6), (4, 5)]],
+    "r": [[(0, 2), (0, 6)], [(0, 3.6), (1.4, 2.2), (2, 2), (3.2, 2)]],
+    "s": [[(3.8, 2.2), (1, 2), (0, 2.8), (0, 3.3), (1, 4), (3, 4), (4, 4.7), (4, 5.3), (3, 6), (0.2, 5.8)]],
+    "t": [[(1, 0.6), (1, 5.2), (1.8, 6), (3, 6)], [(0, 2), (3, 2)]],
+    "u": [[(0, 2), (0, 5), (1, 6), (3, 6), (4, 5)], [(4, 2), (4, 6)]],
+    "v": [[(0, 2), (2, 6), (4, 2)]],
+    "w": [[(0, 2), (1.2, 6), (2.5, 3), (3.8, 6), (5, 2)]],
+    "x": [[(0, 2), (4, 6)], [(4, 2), (0, 6)]],
+    "y": [[(0, 2), (2, 6)], [(4, 2), (1.2, 7.5)]],
+    "z": [[(0, 2), (4, 2), (0, 6), (4, 6)]],
+}
+# Narrow and wide capitals/punctuation get their own extents.
+G.update({
+    "I": [[(0, 0), (0, 6)]],
+    "1": [[(0, 1), (1, 0), (1, 6)]],
+    "M": [[(0, 6), (0, 0), (2.5, 2.8), (5, 0), (5, 6)]],
+    "W": [[(0, 0), (1.2, 6), (2.5, 2.4), (3.8, 6), (5, 0)]],
+    ".": [[(0, 6), (0, 6)]],
+    ",": [[(0.6, 5.6), (0, 7)]],
+    "!": [[(0, 0), (0, 4.2)], [(0, 6), (0, 6)]],
+    ":": [[(0, 2.5), (0, 2.5)], [(0, 5.5), (0, 5.5)]],
+    "'": [[(0, 0), (0, 2)]],
+    "(": [[(1.2, 0), (0, 1.5), (0, 4.5), (1.2, 6)]],
+    ")": [[(0, 0), (1.2, 1.5), (1.2, 4.5), (0, 6)]],
+})
+G.update(L)
+
+DESIGN_H = 7.5
 
 
 def glyph(c):
     if c in G:
         return G[c]
-    if c.isalpha() and c.islower():
-        return _lower(c)
-    return None
+    up = G.get(c.upper()) if c.isalpha() else None
+    return up
 
 
-def render(c, w, h, thickness=None) -> np.ndarray:
-    """Return an (h, w) float coverage mask in [0, 1] for character c."""
-    mask = np.zeros((h, w), dtype=np.float32)
+def extent(c):
+    """(min_x, max_x) of a glyph's design, or None for blanks."""
     lines = glyph(c)
-    if not lines or w < 2 or h < 3:
-        return mask
-    pad_x = max(0.5, w * 0.12)
-    pad_y = max(0.5, h * 0.1)
-    sx = (w - 2 * pad_x) / 4.0
-    sy = (h - 2 * pad_y) / 7.0
-    th = thickness if thickness is not None else max(0.7, min(w, h) * 0.09)
+    if not lines:
+        return None
+    xs = [x for line in lines for x, _ in line]
+    return min(xs), max(xs)
+
+
+def _stroke(mask, lines, ox, oy, sx, sy, th):
+    h, w = mask.shape
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32) + 0.5
     for line in lines:
-        pts = [(pad_x + x * sx, pad_y + y * sy) for x, y in line]
+        pts = [(ox + x * sx, oy + y * sy) for x, y in line]
         if len(pts) == 1:
             pts = pts * 2
         for (x0, y0), (x1, y1) in zip(pts, pts[1:]):
@@ -105,7 +144,59 @@ def render(c, w, h, thickness=None) -> np.ndarray:
             else:
                 t = np.clip(((xx - x0) * dx + (yy - y0) * dy) / ll, 0, 1)
                 d = np.hypot(xx - (x0 + t * dx), yy - (y0 + t * dy))
-            mask = np.maximum(mask, np.clip(th + 0.5 - d, 0, 1))
+            np.maximum(mask, np.clip(th + 0.5 - d, 0, 1), out=mask)
+    return mask
+
+
+def _scale(h, thickness):
+    pad_y = max(0.5, h * 0.06)
+    sy = (h - 2 * pad_y) / DESIGN_H
+    th = thickness if thickness is not None else max(0.6, h * 0.075)
+    return pad_y + th * 0.3, sy, th
+
+
+def render(c, w, h, thickness=None) -> np.ndarray:
+    """(h, w) coverage mask in [0, 1] of character c centred in a w-wide
+    cell, keeping the design's proportions (squeezed only if too wide)."""
+    mask = np.zeros((h, w), dtype=np.float32)
+    ext = extent(c)
+    if ext is None or w < 2 or h < 3:
+        return mask
+    oy, sy, th = _scale(h, thickness)
+    oy = min(oy, h - th - 6 * sy)   # keep the baseline inside tiny cells
+    span = ext[1] - ext[0]
+    th = max(0.5, min(th, (w - 1) * 0.3))
+    room = max(0.0, w - 2 * th - 0.5)
+    sx = min(sy * 0.9, room / span) if span > 0 else sy
+    left = (w - span * sx) / 2
+    left = np.floor(left) + 0.5      # stems on pixel centres stay crisp
+    ox = left - ext[0] * sx
+    return _stroke(mask, glyph(c), ox, oy, sx, sy, th)
+
+
+def advance(c, h, aspect=0.9, thickness=None, gap=None):
+    """Pixel advance of c in proportional layout at cell height h."""
+    _, sy, th = _scale(h, thickness)
+    gap = gap if gap is not None else max(1.0, sy * 1.1 + th)
+    ext = extent(c)
+    if ext is None:
+        return sy * 3.0 if c == " " else 0.0
+    return (ext[1] - ext[0]) * sy * aspect + 2 * th + gap - th
+
+
+def render_line(text, h, aspect=0.9, thickness=None, gap=None) -> np.ndarray:
+    """Proportionally spaced line of text: an (h, W) coverage mask."""
+    _, sy, th = _scale(h, thickness)
+    oy, _, _ = _scale(h, thickness)
+    oy = min(oy, h - th - 6 * sy)
+    width = int(np.ceil(sum(advance(c, h, aspect, thickness, gap) for c in text) + th + 1))
+    mask = np.zeros((h, max(1, width)), np.float32)
+    x = th + 0.5
+    for c in text:
+        ext = extent(c)
+        if ext is not None:
+            _stroke(mask, glyph(c), x - ext[0] * sy * aspect, oy, sy * aspect, sy, th)
+        x += advance(c, h, aspect, thickness, gap)
     return mask
 
 
