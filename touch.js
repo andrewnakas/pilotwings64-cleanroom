@@ -1,4 +1,4 @@
-window.CLEANROOM_PAD = {"adapter": "gamepad", "waitFor": "#overlay"};
+window.CLEANROOM_PAD = {"adapter": "gamepad", "waitFor": "#overlay", "canvas": "#stage", "float": true};
 // Clean-room N64 pad: one on-screen controller shared by every N64 web build (our own code).
 //
 // Shown on touch devices when no physical controller is connected; a controller that connects later hides it
@@ -9,7 +9,8 @@ window.CLEANROOM_PAD = {"adapter": "gamepad", "waitFor": "#overlay"};
 //   labels   {A:'FIRE', ...}   small caption under a button
 //   hide     ['L', 'CR']       buttons the game does not use
 //   hint     'text'            one line shown in portrait
-//   adapter  'n64wasm' | 'ejs' | 'gamepad' | 'mask' | 'none'   how state reaches the game (default 'gamepad')
+//   adapter  'n64wasm' | 'ejs' | 'gamepad' | 'mask' | 'keys' | 'none'   how state reaches the game (default 'gamepad')
+//   keys     {A:['KeyE','Enter'], up:'KeyW', ...}   for adapter 'keys': keyboard codes per button and stick direction
 //   sink     'module' | 'touchPad'   for 'mask': Module._web_touch_input(mask, x, y) or window.__touchPad
 //   map      {A:0, B:2, ...}   for 'gamepad': N64 button -> standard gamepad button index
 //   canvas   '#canvas'         the game canvas to place in the screen area
@@ -430,6 +431,13 @@ window.CLEANROOM_PAD = {"adapter": "gamepad", "waitFor": "#overlay"};
       if (waiting()) { setTimeout(start, 300); return; }
       build();
       const wait = setInterval(() => { if (adopt()) { clearInterval(wait); layout(); } }, 300);
+      // The exported function aborts the program if it is called before the runtime is up.
+      let ready = false;
+      if (CFG.sink !== 'touchPad' && window.Module) {
+        if (Module.calledRun) ready = true;
+        const prev = Module.onRuntimeInitialized;
+        Module.onRuntimeInitialized = function () { if (prev) prev.apply(this, arguments); ready = true; };
+      }
       const tick = () => {
         requestAnimationFrame(tick);
         // A physical controller is read by the game itself.
@@ -440,7 +448,38 @@ window.CLEANROOM_PAD = {"adapter": "gamepad", "waitFor": "#overlay"};
         if (CFG.sink === 'touchPad') {
           const t = window.__touchPad;
           if (t) { t.buttons = mask; t.sx = x; t.sy = y; }
-        } else if (window.Module && Module._web_touch_input) Module._web_touch_input(mask, x, y);
+        } else if (ready) Module._web_touch_input(mask, x, y);
+      };
+      requestAnimationFrame(tick);
+    };
+    if (document.body) start(); else document.addEventListener('DOMContentLoaded', start);
+  }
+
+  // Keyboard: for builds that only take keys. Buttons and the four stick directions become key presses.
+  const KEYCODE = { Enter: 13, Tab: 9, Space: 32, Escape: 27, ArrowLeft: 37, ArrowUp: 38, ArrowRight: 39, ArrowDown: 40,
+    ShiftLeft: 16, ControlLeft: 17 };
+  function keyEvent(type, code) {
+    const letter = /^Key([A-Z])$/.exec(code);
+    const kc = letter ? letter[1].charCodeAt(0) : KEYCODE[code] || 0;
+    const key = letter ? letter[1].toLowerCase() : code === 'Space' ? ' ' : code;
+    window.dispatchEvent(new KeyboardEvent(type, { code, key, keyCode: kc, which: kc, bubbles: true }));
+  }
+  function installKeys() {
+    const map = CFG.keys || {}, down = {};
+    const start = () => {
+      if (waiting()) { setTimeout(start, 300); return; }
+      build();
+      const wait = setInterval(() => { if (adopt()) { clearInterval(wait); layout(); } }, 300);
+      const tick = () => {
+        requestAnimationFrame(tick);
+        const on = { up: S.y > 0.4, down: S.y < -0.4, left: S.x < -0.4, right: S.x > 0.4 };
+        for (const k of KEYS) on[k] = !!S[k];
+        for (const k in map) {
+          const want = !!on[k] && !realPad();
+          if (want === !!down[k]) continue;
+          down[k] = want;
+          for (const code of [].concat(map[k])) keyEvent(want ? 'keydown' : 'keyup', code);
+        }
       };
       requestAnimationFrame(tick);
     };
@@ -476,6 +515,7 @@ window.CLEANROOM_PAD = {"adapter": "gamepad", "waitFor": "#overlay"};
   }
   if (want && CFG.adapter === 'gamepad') installVirtualPad();
   if (want && CFG.adapter === 'mask') installMask();
+  if (want && CFG.adapter === 'keys') installKeys();
   if (want && CFG.adapter === 'ejs') {
     if (document.head) installEJS(); else document.addEventListener('DOMContentLoaded', installEJS);
   }
